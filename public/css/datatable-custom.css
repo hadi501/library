@@ -1,0 +1,18 @@
+div.dt-container .dt-paging .dt-paging-button.current, div.dt-container .dt-paging .dt-paging-button.current:hover{
+    color: white !important;
+    background-color: #F8B734;
+    border: 0px !important;
+}
+
+table.dataTable th.dt-type-numeric, table.dataTable th.dt-type-date, table.dataTable td.dt-type-numeric, table.dataTable td.dt-type-date{
+    text-align: unset !important;
+}
+
+@media screen and (max-width: 767px) {
+    div.dt-container div.dt-layout-cell.dt-start{
+        display: none;
+    }
+    .dt-container .dt-search{
+        margin: 0 0 0.75rem 0 !important;
+    }
+}

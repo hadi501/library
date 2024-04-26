@@ -1,0 +1,112 @@
+.detail-section ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.detail-section ul li {
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.detail-section ul li span {
+    width: 50%;
+    /* font-family: Nunito, serif;
+    font-weight: 700;
+    font-size: 12px; */
+    color: #6d6d6d;
+}
+
+.detail-section h3 {
+    /* font-family: Nunito, serif; */
+    font-weight: 700;
+    font-size: 18px;
+    color: #151515;
+    margin-bottom: 15px;
+}
+
+.o9hhOd, .I26one, .iXRFPc {
+    display: inline-block;
+}
+
+.bp9Aid {
+    color: rgb(95, 99, 104);
+    margin-left: 10px;
+}
+
+.F7XJmb {
+    height: 12px;
+    width: 12px;
+}
+
+.Bp7T9b, .deXnLd, .F7XJmb {
+    display: inline-block;
+    text-align: left;
+}
+
+.qOrUJd {
+    color: #0179ca;
+    fill: #0179ca;
+    stop-color: #0179ca;
+}
+
+.Wi7KIe {
+    fill: #b8b8b8;
+    stop-color: #b8b8b8;
+}
+
+.checked {
+    color: #0179ca;
+    fill: #0179ca;
+    stop-color: #0179ca;
+    font-size : 25px;
+}
+.unchecked {
+    fill: #b8b8b8;
+    stop-color: #b8b8b8;
+    font-size : 25px;
+}
+
+.review-name{
+    display: inline-block;
+    margin-left: 10px;
+}
+
+.review-pp{
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    overflow: hidden;
+    background-size: cover;
+}
+
+
+@media (min-width: 320px) {
+    .row-title{
+        width: 100%;
+    }
+}
+
+@media (min-width: 548px) {
+    .row-title{
+        width: 80%;
+    }
+}
+
+@media (min-width: 768px) {
+    .row-title{
+        width: 90%;
+    }
+}
+
+@media (min-width: 992px) {
+    .row-title{
+        width: 80%;
+    }
+}
+
+@media (min-width: 1200px) {
+    .row-title{
+        width: 70%;
+    }
+}
