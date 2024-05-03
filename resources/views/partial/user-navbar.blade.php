@@ -5,7 +5,7 @@
     </li>
 
     <li>
-        <a href="#">Dashboard</a>
+        <a href="/user-dashboard">Dashboard</a>
     </li>
     <li>
         <a href="#bookSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Book</a>

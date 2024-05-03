@@ -4,14 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class UserController extends Controller
+class FinanceController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('admin.user.index', ['searchBar' => 'off']);
+        return view('admin.finance.index', ['searchBar' => 'off']);
     }
 
     /**
@@ -19,7 +19,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('admin.user.add', ['searchBar' => 'off']);
+        //
     }
 
     /**

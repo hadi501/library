@@ -5,7 +5,7 @@
     </li>
 
     <li>
-        <a href="#">Dashboard</a>
+        <a href="/admin">Dashboard</a>
     </li>
 
     <li>
@@ -39,7 +39,7 @@
         <a href="#financeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Finance</a>
         <ul class="collapse list-unstyled" id="financeSubmenu">
             <li>
-                <a href="#">Home</a>
+                <a href="/finance">Home</a>
             </li>
         </ul>
     </li>

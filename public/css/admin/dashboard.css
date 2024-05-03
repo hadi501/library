@@ -1,0 +1,43 @@
+.bi{
+    display: flex;
+    justify-content: center;
+}
+
+.bi-person-fill::before {
+    content: "\f4b3";
+    color: #ffc107 !important;
+}
+
+.bi-book-fill::before {
+    content: "\f192";
+    color: #007bff !important;
+}
+
+.bi-calendar-check-fill::before {
+    content: "\f1e1";
+    color: #dc3545 !important;
+}
+
+.header-user{
+    background-color: #ffc107 !important;
+}
+
+.header-book{
+    background-color: #007bff !important;
+}
+
+.header-lend{
+    background-color: #dc3545 !important;
+}
+
+.card{
+    min-width: 190px !important;
+}
+
+.card-title {
+    margin: 0.75rem 0.75rem 0.75rem 1rem;
+}
+
+.col-md-4 {
+    min-width: 200px;
+}

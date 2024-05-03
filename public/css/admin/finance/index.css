@@ -1,0 +1,33 @@
+.bi-info-circle-fill::before {
+    content: "\f40f";
+    vertical-align: middle;
+}
+.bi-trash::before {
+    content: "\f5a8";
+    vertical-align: middle;
+}
+
+.modal-body{
+    padding: 10px 30px !important;
+}
+
+.fs-title {
+    text-align: center;
+    font-size: 18px;
+    text-transform: uppercase;
+    color: #2C3E50;
+    margin-bottom: 10px;
+    letter-spacing: 2px;
+    font-weight: bold;
+}
+
+fieldset{
+    background: white;
+    border: 0 none;
+    border-radius: 8px;
+    box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.4);
+    padding: 20px 30px !important;
+    box-sizing: border-box;
+    width: 100%;
+    position: relative;
+}
