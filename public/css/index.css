@@ -3,25 +3,32 @@
   min-width: 100px;
 }
 
+
+@media only screen and (max-width: 600px) {
+
+  .col-book, .col-image{
+    padding: 0 !important;
+  }
+}
+
 .book-cover{
-  min-width: 100px;
-  min-height: 150px;
-  max-width: 160px;
-  max-height: 240px;
-  /* width: 100%; */
-  height: auto;
+  min-width: 80px !important;
+  min-height: 120px !important;
+  max-width: 160px !important;
+  max-height: 240px !important;
 }
 
 .book-title{
   /* font-size: 1rem; */
-  /* font-size: clamp(0.85rem, 1rem, 1.25rem); */
-  font-size: clamp(0.9rem, 2.5vw, 1.2rem);
-  font-weight: bold;
-  overflow: hidden;
-  max-width: 100%;
-  text-overflow: ellipsis;
-  width: fit-content;
-  white-space: nowrap;
+  font-size: clamp(0.9rem, 2.5vw, 1.25rem);
+  /* font-size: clamp(0.9rem, 2.5vw, 1.1rem); */
+  font-weight: 550;
+  /* text-align: center; */
+  /* overflow: hidden; */
+  /* max-width: 100%; */
+  /* text-overflow: ellipsis; */
+  /* width: fit-content; */
+  /* white-space: nowrap; */
 }
 
 .book-author {

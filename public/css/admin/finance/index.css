@@ -31,3 +31,26 @@ fieldset{
     width: 100%;
     position: relative;
 }
+
+input{
+    font-size: 1rem !important;
+    font-weight: 500;
+}
+
+.edit-form{
+    --bs-form-select-bg-img: none;
+    border: 0;
+    font-size: 1rem !important;
+    font-weight: 500;
+    padding: 0 !important;
+}
+
+.add-button{
+    color: white !important;
+}
+
+.add-input{
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+}

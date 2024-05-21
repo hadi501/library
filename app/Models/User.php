@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
@@ -16,12 +17,32 @@ class User extends Authenticatable
         'username',
         'email',
         'password',
-        // 'phone',
+        'phone',
         'role',
-        // 'profile_picture',
-        // 'created_at',
-        // 'updated_at'
+        'picture',
+        'created_at',
+        'updated_at'
     ];
+
+    public function lends(): HasMany
+    {
+        return $this->hasMany(Lend::class);
+    }
+
+    public function Fine(): HasMany
+    {
+        return $this->hasMany(Fine::class);
+    }
+
+    public function Favorite()
+    {
+        return $this->hasMany(Favorite::class);
+    }
+
+    public function Rate()
+    {
+        return $this->hasMany(Rate::class);
+    }
     
     // use HasApiTokens, HasFactory, Notifiable;
 

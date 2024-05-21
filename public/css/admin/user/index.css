@@ -1,0 +1,7 @@
+.bi-pencil::before, .bi-trash::before {
+    vertical-align: middle;
+}
+
+.phone{
+    color: #007bff;
+}

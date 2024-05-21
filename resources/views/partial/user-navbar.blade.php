@@ -1,5 +1,4 @@
 <ul class="list-unstyled components mb-5">
-    
     <li>
         <a href="/">Home</a>
     </li>
@@ -11,10 +10,10 @@
         <a href="#bookSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Book</a>
         <ul class="collapse list-unstyled" id="bookSubmenu">
             <li>
-                <a href="#">Favorite</a>
+                <a href="/favorite">Favorite</a>
             </li>
             <li>
-                <a href="#">Lend</a>
+                <a href="/user-lend">Lend</a>
             </li>
         </ul>
     </li>
@@ -27,11 +26,20 @@
         </ul>
     </li> -->
     <li>
-        <a href="#">Profile</a>
+        <a href="#readSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Read Tracker</a>
+        <ul class="collapse list-unstyled" id="readSubmenu">
+            <li>
+                <a href="/tracker">My Book</a>
+            </li>
+            <li>
+                <a href="#">History</a>
+            </li>
+        </ul>
     </li>
     <li>
-        <a href="#">Contact</a>
+        <a href="/profile">Profile</a>
     </li>
+
     <li>
         <a href="/logout">Logout</a>
     </li>

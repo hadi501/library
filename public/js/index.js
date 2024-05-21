@@ -1,14 +1,25 @@
-$('.btn').on('click', function(e) {
-    if ($(this).hasClass('disable')) {
+$(".btn").on("click", function (e) {
+    if ($(this).hasClass("disable")) {
         e.preventDefault();
     }
 });
-// var node = document.getElementsByClassName('book-title')[0],
 
-// str = node.textContent;
-// // textContent = "Some sample text."
-// if(str.length > 21) str = str.substring(0,21);
+function deleteData(id, url){
+    const formDelete = document.querySelector('#form-delete');
 
-// console.log(str + "...");
-
-// node.textContent = str + "...";
+    Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+      }).then((result) => {
+        if (result.isConfirmed) {
+            formDelete.setAttribute('action', `/` + url + `/` + id);
+            formDelete.submit();
+            return;
+        }
+      });
+};

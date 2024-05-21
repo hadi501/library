@@ -10,63 +10,67 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-12 col-md-6">
-            <div style="padding: 1rem 0;">
-                <div class="mb-4 d-flex justify-content-center">
-                    <img id="selectedImage" src="https://mdbootstrap.com/img/Photos/Others/placeholder.jpg" class="rounded-circle" style="width: 200px; height: 200px; object-fit: cover;" alt="example placeholder" />
-                </div>
-                <div class="d-flex justify-content-center">
-                    <div data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-rounded">
-                        <label class="form-label text-white m-1" for="customFile1">Choose file</label>
-                        <input type="file" class="form-control d-none" id="customFile1" onchange="displaySelectedImage(event, 'selectedImage')" />
+
+        <form action="{{ route('user.store') }}" method="POST" enctype="multipart/form-data">
+            {{ csrf_field() }}
+            <div class="col-12 col-md-6">
+                <div style="padding: 1rem 0;">
+                    <div class="mb-4 d-flex justify-content-center">
+                        <img id="picture_img" src="https://mdbootstrap.com/img/Photos/Others/placeholder.jpg" class="rounded-circle" style="width: 200px; height: 200px; object-fit: cover;" alt="example placeholder" />
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <div data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-rounded">
+                            <label class="form-label text-white m-1" for="picture">Choose file</label>
+                            <input type="file" class="form-control d-none" id="picture" name="picture" onchange="displaySelectedImage(event, 'picture_img')" required />
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="col-12 col-md-6">
-            <div class="form-group mb-3">
-                <label for="kode" class="mb-2">NIM</label>
-                <input type="number" class="form-control custom-form-control " name="book_code" id="book_code" required="" value="" maxlength="10">
-            </div>
+            <div class="col-12 col-md-6">
+                <div class="form-group mb-3">
+                    <label for="id" class="mb-2">NIM</label>
+                    <input type="number" class="form-control custom-form-control" name="id" required>
+                </div>
 
-            <div class="form-group mb-3">
-                <label for="kode" class="mb-2">Nama Lengkap</label>
-                <input type="text" class="form-control custom-form-control " name="book_code" id="book_code" required="" value="" maxlength="10">
-            </div>
-            <div class="form-group mb-3">
-                <label for="kode" class="mb-2">Email</label>
-                <input type="text" class="form-control custom-form-control " name="book_code" id="book_code" required="" value="" maxlength="10">
-            </div>
-            <div class="form-group mb-3">
-                <label for="kode" class="mb-2">Password</label>
-                <input type="text" class="form-control custom-form-control " name="book_code" id="book_code" required="" value="" maxlength="10">
-            </div>
-            <div class="form-group mb-3">
-                <label for="kode" class="mb-2">Telepon</label>
-                <input type="text" class="form-control custom-form-control " name="book_code" id="book_code" required="" value="" maxlength="10">
-            </div>
+                <div class="form-group mb-3">
+                    <label for="username" class="mb-2">Nama Lengkap</label>
+                    <input type="text" class="form-control custom-form-control" name="username" id="username" required>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="email" class="mb-2">Email</label>
+                    <input type="email" class="form-control custom-form-control" name="email" id="email" required>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="password" class="mb-2">Password</label>
+                    <input type="password" class="form-control custom-form-control" name="password" id="password" required>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="phone" class="mb-2">Telepon</label>
+                    <input type="number" class="form-control custom-form-control" name="phone" id="phone" required>
+                </div>
 
-            <div class="form-group mb-3">
-                <label for="judul" class="mb-2">Role</label>
-                <!-- <input type="text" class="form-control custom-form-control " name="category" id="category" required value="" maxlength="50"/> -->
-                <select name="category" id="category" class="form-select custom-form-control " required="">
-                    <option selected="" disabled="" value="">---</option>
-                    <option value="0">User</option>
-                    <option value="1">Admin</option>
-                    <option value="2">Bendahara</option>
-                    <option value="3">Super Admin</option>
-                </select>
+                <div class="form-group mb-3">
+                    <label for="role" class="mb-2">Role</label>
+                    <!-- <input type="text" class="form-control custom-form-control " name="category" id="category" required value="" maxlength="50"/> -->
+                    <select name="role" id="role" class="form-select custom-form-control" required>
+                        <option selected disabled value="">---</option>
+                        <option value="0">User</option>
+                        <option value="1">Admin</option>
+                        <option value="2">Bendahara</option>
+                        <option value="3">Super Admin</option>
+                    </select>
+                </div>
+
+                <div class="form-group mt-4 text-center">
+                    <button type="submit" class="btn btn-dark">
+                        Selesai
+                    </button>
+                </div>
+
+
             </div>
-
-            <div class="form-group mt-4 text-center">
-                <button type="submit" class="btn btn-dark">
-                    Selesai
-                </button>
-            </div>
-
-
-        </div>
+        </form>
     </div>
 </div>
 

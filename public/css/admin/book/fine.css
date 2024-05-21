@@ -1,0 +1,4 @@
+.bi-check-square::before {
+    content: "\f26d";
+    vertical-align: middle;
+}

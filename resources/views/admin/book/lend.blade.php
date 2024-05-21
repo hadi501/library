@@ -9,30 +9,35 @@
         <th>Cover</th>
         <th>Title</th>
         <th>Peminjam</th>
-        <th>Pinjam</th>
+        <!-- <th>Pinjam</th> -->
         <th>Kembali</th>
-        <th>Status</th>
+        <th>Telepon</th>
         <th>Action</th>
     </thead>
     <tbody>
 
-        @for($i = 0; $i < 100; $i++) <tr>
-            <td> <img src="https://baitulhikmah.my.id/storage/book_covers/B1435.jpg" alt="Book cover" width="100"></td>
-            <td>Shahih Bukhari</td>
-            <td>Abdullah</td>
-            <td>5 Maret 2024</td>
-            <td>12 Maret 2024</td>
-            <td>Dipinjam</td>
+        @foreach($lends as $lend)
+        <tr>
+            <td> <img src="{{ asset('storage/book/' . $lend->book->cover) }}" alt="Book cover" width="100"></td>
+            <td>{{ $lend->book->title }}</td>
+            <td>{{ $lend->user->username }}</td>
+            @if(\Carbon\Carbon::parse($lend->return_date)->isPast())
+                <td style="color: red;">{{ \Carbon\Carbon::parse($lend->return_date)->locale('id')->isoFormat('dddd, D MMMM Y') }}</td>
+            @else
+                <td style="color: green;">{{ \Carbon\Carbon::parse($lend->return_date)->locale('id')->isoFormat('dddd, D MMMM Y') }}</td>
+            @endif
+            
+            <td><a target="_blank" rel="noopener noreferrer" class="phone" href="https://wa.me/62{{ $lend->user->phone }}" style="color: #2098ce !important;">0{{ $lend->user->phone }}</a></td>
             <td>
-                <a href="#" class="btn btn-success">
-                    <i class="bi bi-check-square"></i>
-                </a>
-                <a href="#" class="btn btn-primary">
+                <a href="#" class="btn btn-info" onclick="updateData(id = '{{$lend->id}}')">
                     <i class="bi bi-plus-square"></i>
                 </a>
+                <a href="#" class="btn btn-danger" onclick="finishLend(id = '{{$lend->id}}')">
+                    <i class="bi bi-check-square"></i>
+                </a>
             </td>
-            </tr>
-            @endfor
+        </tr>
+        @endforeach
     </tbody>
 </table>
 <!-- </div> -->
@@ -49,7 +54,8 @@
             </div> -->
             <div class="modal-body mt-4 border-0">
                 <!-- MultiStep Form -->
-                <form id="msform">
+                <form action="{{ route('lend.store') }}" method="POST" id="msform">
+                    {{ csrf_field() }}
                     <!-- progressbar -->
                     <ul id="progressbar">
                         <li class="active">NIM & ID Buku</li>
@@ -68,14 +74,14 @@
                             </div>
                         </div>
                         <div id="nim-div">
-                            <input type="number" name="nim" placeholder="NIM" />
+                            <input type="number" name="nim" placeholder="NIM" required />
                         </div>
                         <div id="book-div">
-                            <input type="number" name="bookid" placeholder="Book ID" />
+                            <input type="number" class="idbook" name="bookid[]" placeholder="Book ID" required />
                         </div>
-                        
+
                         <input type="button" id="next" name="next" class="next action-button" value="Next" />
-                            
+
                     </fieldset>
                     <fieldset>
                         <h2 class="fs-title">Detail Peminjaman</h2>
@@ -84,26 +90,28 @@
                         <div class="row mt-4 text-left">
                             <div class="col">
                                 <h6 class="label-detail">Operator</h6>
-                                <h6 class="text-black">Aksaril Shaka Hikmatiar</h6>
+                                <h6 class="text-black">{{ Auth::user()->username }}</h6>
                             </div>
                             <div class="col">
                                 <h6 class="label-detail">Peminjam</h6>
-                                <h6 class="text-black">Renaldi Setia Nugraha</h6>
+                                <h6 class="text-black" id="borrower">-</h6>
                             </div>
                         </div>
 
                         <div class="row mt-4 text-left">
                             <div class="col">
                                 <h6 class="label-detail">Pinjam</h6>
-                                <h6 class="text-black">15 September 2024</h6>
+                                <h6 class="text-black">{{ $carbon::now()->timezone('Asia/Jakarta')->locale('id')->isoFormat('dddd, D MMMM Y') }}</h6>
+                                <input type="hidden" name="lend_date" value="{{ $carbon::now()->timezone('Asia/Jakarta')->locale('id')->isoFormat('Y-MM-DD') }}">
                             </div>
                             <div class="col">
                                 <h6 class="label-detail">Kembali</h6>
-                                <h6 class="text-black">22 September 2024</h6>
+                                <h6 class="text-black">{{ $carbon::now()->addWeeks(1)->timezone('Asia/Jakarta')->locale('id')->isoFormat('dddd, D MMMM Y') }}</h6>
+                                <input type="hidden" name="return_date" value="{{ $carbon::now()->addWeeks(1)->timezone('Asia/Jakarta')->locale('id')->isoFormat('Y-MM-DD') }}">
                             </div>
                         </div>
-                        
-                    
+
+
 
                         <table class="table table-borderless mt-4 mb-4 text-left">
                             <thead>
@@ -111,25 +119,15 @@
                                 <th style="color: #2098ce; width: 80%;">Judul Buku</th>
                             </thead>
 
-                            <tbody>
-                                <tr>
-                                    <td>150729</td>
-                                    <td>Menemukan Jejak Atlantis di Cisangkan Hilir Cimahi</td>
-                                </tr>
-                                <tr>
-                                    <td>130259</td>
-                                    <td>Tasawuf vs Filsafat: Death Battle</td>
-                                </tr>
-                                <tr>
-                                    <td>170184</td>
-                                    <td>Sunda Menafsir</td>
-                                </tr>
+                            <tbody id="lend-detail">
 
+                            </tbody>
+                            <tfoot>
                                 <tr>
                                     <th style="color: #2098ce;">Total Buku</th>
-                                    <th style="color: #2098ce;">3</th>
+                                    <th style="color: #2098ce;" id="book-total">-</th>
                                 </tr>
-                            </tbody>
+                            </tfoot>
 
                         </table>
 
@@ -147,7 +145,7 @@
                         <input type="password" name="pass" placeholder="Password" />
                         <input type="password" name="cpass" placeholder="Confirm Password" /> -->
                         <input type="button" id="previous" name="previous" class="previous action-button-previous" value="Previous" />
-                        <input type="submit" name="submit" class="submit action-button btn disable" value="Submit" />
+                        <input type="submit" class="submit action-button btn" />
                     </fieldset>
                 </form>
                 <!-- /.MultiStep Form -->
@@ -159,6 +157,19 @@
         </div>
     </div>
 </div>
+
+{{-- form delete hidden --}}
+<form action="" method="POST" id="form-delete">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+    <input type="hidden" id="status" name="status" value="2">
+</form>
+
+{{-- form delete hidden --}}
+<form action="" method="POST" id="form-update">
+    <input type="hidden" name="_method" value="PUT">
+    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+</form>
 
 @push('styles')
 <link href="{{ asset('css/admin/book/lend.css') }}" rel="stylesheet">

@@ -3,30 +3,30 @@
     justify-content: center;
 }
 
-.bi-person-fill::before {
-    content: "\f4b3";
-    color: #ffc107 !important;
-}
-
 .bi-book-fill::before {
     content: "\f192";
+    color: #138496 !important;
+}
+
+.bi-hourglass-split::before {
+    content: "\f3ff";
     color: #007bff !important;
 }
 
-.bi-calendar-check-fill::before {
-    content: "\f1e1";
+.bi-star-fill::before {
+    content: "\f55b";
     color: #dc3545 !important;
 }
 
-.header-user{
-    background-color: #ffc107 !important;
+.header-total{
+    background-color: #138496 !important;
 }
 
-.header-book{
+.header-current{
     background-color: #007bff !important;
 }
 
-.header-lend{
+.header-favorite{
     background-color: #dc3545 !important;
 }
 

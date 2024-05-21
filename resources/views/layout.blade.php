@@ -28,7 +28,15 @@
     <div class="wrapper d-flex align-items-stretch">
         <nav id="sidebar">
             <div class="p-4 pt-5" style="position: sticky; top: 0;">
-                <a href="#" class="img logo rounded-circle mb-5" style="background-image: url(/images/pp.jpg);"></a>
+                
+            
+                
+                @if(Auth::check())
+                <a href="#" class="img logo rounded-circle mb-5" style="background-image: url('/storage/user/{{ Auth::user()->picture }}');"></a>
+                @else
+                <a href="#" class="img logo rounded-circle mb-5" style="background-image: url('/storage/user/picture_default.png');"></a>
+                @endif
+
 
                 {{-- @include('partial.admin-navbar') --}}
 
@@ -98,8 +106,6 @@
             @include('sweetalert::alert')
 
             <div class="main-content">
-                <!-- <h2 class="mb-4">Sidebar #01</h2> -->
-                <!-- <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p> -->
 
                 <!-- <main> -->
                 @yield('content')

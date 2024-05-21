@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
+use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -11,7 +14,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('admin.user.index', ['searchBar' => 'off']);
+        $users = User::all();
+
+        return view('admin.user.index', ['users' => $users, 'searchBar' => 'off']);
     }
 
     /**
@@ -27,8 +32,47 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        // Check if id & email exists in storage
+
+        if (User::where('id', $request->id)->exists()) {
+            Alert::error('Error!', 'NIM sudah terdaftar');
+            return redirect()->back();
+        }
+        
+        if (User::where('email', $request->email)->exists()) {
+            Alert::error('Error!', 'Email sudah terdaftar');
+            return redirect()->back();
+        }
+
+        $user = new User();
+
+        $user->id       = $request->id;
+        $user->username = $request->username;
+        $user->email    = $request->email;
+        $user->password = bcrypt($request->password);
+        $user->phone    = $request->phone;
+        $user->role     = $request->role;
+
+        // Store image
+        $filename = $request->id . '.' . $request->picture->extension();
+        $path = $request->picture->storeAs('public/user', $filename);
+        $user->picture = $filename;
+        
+        // Save to Database
+        $user->save();
+
+        $users = User::all();
+        
+        Alert::success('Success!', 'User berhasil ditambahkan');
+        return redirect()->to('/user',)->with(['users' => $users,'searchBar' => 'off']);
     }
+
+    // public function recordCheck($id, $email){
+        
+        
+
+    // }
 
     /**
      * Display the specified resource.
@@ -43,7 +87,9 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $user = User::find($id);
+
+        return view('admin.user.edit', ['user' => $user, 'searchBar' => 'off']);
     }
 
     /**
@@ -51,7 +97,28 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $user = User::find($id);
+
+        $user->username = $request->username;
+        $user->email    = $request->email;
+        $user->phone    = $request->phone;
+        $user->role     = $request->role;
+
+        if ($request->hasFile('picture')) {
+            $filename = $request->id . '.' . $request->picture->extension();
+            // delete old cover
+            if ($user->picture !== 'picture_default.png') {
+                Storage::delete('public/user/' . $user->picture);
+            }
+            $path = Storage::putFileAs('public/user/', $request->file('picture'), $filename);
+            $user->picture = $filename;
+        }
+
+        $user->update();
+        $users = User::all();
+        
+        Alert::success('Success!', 'User berhasil diedit');
+        return redirect()->to('/user',)->with(['users' => $users,'searchBar' => 'off']);
     }
 
     /**
@@ -59,6 +126,15 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $user = User::find($id);
+        if ($user->picture !== 'picture_default.png') {
+            Storage::delete('public/user/' . $user->picture);
+        }
+
+        $user->delete();
+
+        $users = User::all();
+        Alert::success('Success!', 'User berhasil dihapus');
+        return redirect()->to('/user',)->with(['users' => $users,'searchBar' => 'off']);
     }
 }

@@ -80,6 +80,63 @@
     background-size: cover;
 }
 
+.modal-body{
+    padding: 10px 30px !important;
+}
+
+.fs-title {
+    text-align: center;
+    font-size: 18px;
+    text-transform: uppercase;
+    color: #2C3E50;
+    margin-bottom: 10px;
+    letter-spacing: 2px;
+    font-weight: bold;
+}
+
+fieldset{
+    background: white;
+    border: 0 none;
+    border-radius: 8px;
+    box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.4);
+    padding: 20px 30px !important;
+    box-sizing: border-box;
+    width: 100%;
+    position: relative;
+}
+
+input{
+    font-size: 1rem !important;
+    font-weight: 500;
+}
+
+.edit-form{
+    --bs-form-select-bg-img: none;
+    border: 0;
+    font-size: 1rem !important;
+    font-weight: 500;
+    padding: 0 !important;
+}
+
+.add-button{
+    color: white !important;
+}
+
+.add-input{
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+}
+
+textarea.form-control{
+    min-height: 150px !important;
+}
+
+.bi-star-fill::before {
+    content: "\f55b";
+    color: #007bff;
+}
+
 
 @media (min-width: 320px) {
     .row-title{
