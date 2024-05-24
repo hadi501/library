@@ -6,7 +6,8 @@
     <meta charset="utf-8">
     <!-- <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> -->
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
-
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -91,8 +92,13 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="nav navbar-nav ml-auto">
                             <li class="nav-item active" style="margin: auto;">
-                                <form class="form-inline mt-3 mb-0">
-                                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                                <form action="/" method="GET" class="form-inline mt-3 mb-0">
+                                    {{ csrf_field() }}
+                                    @isset($searchvalue)
+                                    <input class="form-control mr-sm-2" type="search" placeholder="Search" name="searchvalue" id="search" aria-label="Search" value="{{ $searchvalue }}" required>
+                                    @else
+                                    <input class="form-control mr-sm-2" type="search" placeholder="Search" name="searchvalue" id="search" aria-label="Search" required>
+                                    @endisset
                                     <button class="btn btn-outline-warning my-2 my-sm-0" type="submit" style="margin: auto;">Search</button>
                                 </form>
                             </li>
@@ -122,8 +128,14 @@
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('js/layout.js') }}"></script>
     <script src="{{ asset('js/index.js') }}"></script>
-    <script src="https://cdn.datatables.net/2.0.3/js/dataTables.js"></script>
 
+    <script>
+        let headers = {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    </script>
+
+    <script src="https://cdn.datatables.net/2.0.3/js/dataTables.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

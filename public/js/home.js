@@ -1,13 +1,21 @@
 var page = 0;
 var loading = false;
+var url;
+var value = document.getElementById("search").value;
 
 function loadMoreData() {
     if (!loading) {
         loading = true;
         page++;
 
+        if(value){
+            url = "/?page=" + page + "&search=" + value;
+        }else{
+            url = "/?page=" + page;
+        }
+
         $.ajax({
-            url: "/?page=" + page,
+            url: url,
             method: "get",
             dataType: "json",
             success: function (data) {

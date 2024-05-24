@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Rate;
+use App\Models\Book;
+use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class RateController extends Controller
@@ -29,7 +31,23 @@ class RateController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
+        // dd($request);
+
+        $rate = new Rate();
+
+        $rate->user_id = $request->userid;
+        $rate->book_id = $request->bookid;
+        $rate->comment = $request->comment;
+        $rate->star    = $request->star;
+        
+        // Save to Database
+        $rate->save();
+
+        $rates = Rate::with(['user','book'])->where('book_id', $request->bookid)->get();
+        $grade = Rate::where('book_id', $request->bookid)->avg('star');
+
+        Alert::success('Success!', 'Penilaian berhasil ditambahkan');
+        return redirect()->to('/book-detail' . '/' . $request->bookid)->with(['rates' => $rates, 'grade' => (float)$grade, 'searchBar' => 'off']);
     }
 
     /**
@@ -58,12 +76,13 @@ class RateController extends Controller
 
         $rate->comment  = $request->comment;
         $rate->star     = $request->star;
-
         $rate->update();
-        $rates = Rate::all();
-        
+
+        $rates = Rate::with(['user','book'])->where('book_id', $rate->book->id)->get();
+        $grade = Rate::where('book_id', $rate->book->id)->avg('star');
+
         Alert::success('Success!', 'Rate anda berhasil diedit');
-        return redirect()->to('/book-detail/ '. $id)->with(['rates' => $rates, 'searchBar' => 'off']);
+        return redirect()->to('/book-detail'.'/'.$rate->book->id)->with(['rates' => $rates, 'grade' => (float)$grade, 'searchBar' => 'off']);
     }
 
     /**
@@ -71,6 +90,17 @@ class RateController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        
+        $rateid = Rate::where([ 'user_id' => Auth::user()->id, 'book_id' => $id])->first()->id;
+        
+        
+        $rate = Rate::find($rateid);
+        $rate->delete();
+        
+        $rates = Rate::with(['user','book'])->where('book_id', $id)->get();
+        $grade = Rate::where('book_id', $id)->avg('star');
+
+        Alert::success('Success!', 'Rate berhasil dihapus');
+        return redirect()->to('/book-detail'.'/'.$id)->with(['rates' => $rates, 'grade' => (float)$grade, 'searchBar' => 'off']);
     }
 }

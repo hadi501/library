@@ -2,6 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Book;
+use App\Models\Rate;
+use App\Models\Favorite;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Http\Request;
 
 class FavoriteController extends Controller
@@ -11,7 +17,8 @@ class FavoriteController extends Controller
      */
     public function index()
     {
-        return view('user.favorite', ['searchBar' => 'on']);
+        $favorites = Favorite::with(['user','book'])->where('user_id', Auth::user()->id)->orderBy('id', 'desc')->get();
+        return view('user.favorite', ['favorites' => $favorites, 'searchBar' => 'on']);
     }
 
     /**
@@ -19,7 +26,7 @@ class FavoriteController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -27,7 +34,31 @@ class FavoriteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $bookid = $_POST['bookid'];
+
+        $fav = new Favorite();
+
+        $fav->user_id = Auth::user()->id;
+        $fav->book_id = $bookid;
+        
+        // Save to Database
+        $fav->save();
+
+        try {
+            return response()->json(
+                [
+                    'error'     => 'false',
+                    'message'   => 'Sukses'
+                ]
+            );
+        } catch (\Exception $e) {
+            return response()->json(
+                [
+                    'error'     => 'true',
+                    'message'   => $e->getMessage()
+                ]
+            );
+        }
     }
 
     /**
@@ -59,6 +90,26 @@ class FavoriteController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+
+        $fav = Favorite::where([ 'user_id' => Auth::user()->id, 'book_id' => $id])->first();
+
+        $favorite = Favorite::find($fav->id);
+        $favorite->delete();
+        
+        try {
+            return response()->json(
+                [
+                    'error'     => 'false',
+                    'message'   => 'Sukses'
+                ]
+            );
+        } catch (\Exception $e) {
+            return response()->json(
+                [
+                    'error'     => 'true',
+                    'message'   => $e->getMessage()
+                ]
+            );
+        }
     }
 }

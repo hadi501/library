@@ -7,6 +7,7 @@ use App\Models\Book;
 use App\Models\User;
 use App\Models\Lend;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
 use Carbon\Carbon;
 
@@ -22,6 +23,19 @@ class LendController extends Controller
 
         return view('admin.book.lend', ['lends' => $lends, 'carbon' => $carbon, 'searchBar' => 'off']);
     }
+
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function userLend()
+    {
+        $lends = Lend::with(['user','book'])->where('user_id', Auth::user()->id)->orderBy('id', 'desc')->get();
+        $carbon = Carbon::class;
+
+        return view('user.lend', ['lends' => $lends, 'carbon' => $carbon, 'searchBar' => 'off']);
+    }
+
 
     /**
      * Show the form for creating a new resource.

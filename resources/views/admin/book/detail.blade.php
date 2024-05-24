@@ -22,26 +22,34 @@
             <div class="row pt-2 m-auto w-80">
                 <div class="col">
                     @if (Auth::check())
-                    <i class="bi bi-heart fa-lg"></i>
+
+                    @if ($fav != null)
+                    <i class="bi bi-heart-fill heart fa-lg" onclick="favorite('{{ $book->id }}', action='delete')"></i>
                     <p>Favorite</p>
+                    @else
+                    <i class="bi bi-heart fa-lg" onclick="favorite('{{ $book->id }}', action='add')"></i>
+                    <p>Favorite</p>
+                    @endif
+                    
+                    
                     @else
                     <a href="/login" style="color: gray;">
                         <i class="bi bi-heart fa-lg"></i>
                         <p>Favorite</p>
                     </a>
                     @endif
-
                 </div>
                 <div class="col">
                     <i class="bi bi-book-fill fa-lg"></i>
-                    <p>4.3/5</p>
+                    <p>{{$grade}}/5</p>
+                    <!-- <p>4.3/5</p> -->
                 </div>
 
                 <div class="col">
                     @if (Auth::check())
                     @if ($rate != null)
                     <a data-target="#updateRate" data-toggle="modal" class="MainNavText" id="MainNavHelp" href="#updateRate" style="color: gray;">
-                        <i class="bi bi-star-fill fa-lg"></i>
+                        <i class="bi bi-star-fill star fa-lg"></i>
                         <p>Rate!</p>
                     </a>
                     @else
@@ -103,50 +111,49 @@
                 </div>
             </div>
         </div>
-        <div class="row border-bottom mb-4">
+        <div class="row mb-4">
             <h5>Review</h5>
-            @for($i = 0; $i < 5; $i++) <div class="col-12 col-md-6">
+            @foreach($rates as $r)
+            <div class="col-12 col-md-6">
                 <div class="my-2 review-section">
                     <div class="review">
                         <div class="review-head">
-                            <img src="/images/pp.jpg" class="review-pp" width="50px">
-                            <h6 class="review-name">Abdul Abdullah</h6>
+                            <img src="{{ asset('storage/user/' . $r->user->picture) }}" class="review-pp" width="50px">
+                            <h6 class="review-name">{{$r->user->username}}</h6>
                             <div class="Jx4nYe mt-3">
-                                <div aria-label="Diberi rating 5 bintang dari 5 bintang" role="img" class="iXRFPc"><span aria-hidden="true" jsname="fI6EEc" class="F7XJmb" data-number="1" ssk="1#1"><span class="qOrUJd" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                                <path d="M0 0h24v24H0z" fill="none"></path>
-                                                <path d="M0 0h24v24H0z" fill="none"></path>
-                                                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path>
-                                            </svg></span></span><span aria-hidden="true" jsname="fI6EEc" class="F7XJmb" data-number="2" ssk="1#3"><span class="qOrUJd" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                                <path d="M0 0h24v24H0z" fill="none"></path>
-                                                <path d="M0 0h24v24H0z" fill="none"></path>
-                                                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path>
-                                            </svg></span></span><span aria-hidden="true" jsname="fI6EEc" class="F7XJmb" data-number="2" ssk="1#4"><span class="Wi7KIe" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                                <path d="M0 0h24v24H0z" fill="none"></path>
-                                                <path d="M0 0h24v24H0z" fill="none"></path>
-                                                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path>
-                                            </svg></span></span><span aria-hidden="true" jsname="fI6EEc" class="F7XJmb" data-number="4"><span class="Wi7KIe" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                                <path d="M0 0h24v24H0z" fill="none"></path>
-                                                <path d="M0 0h24v24H0z" fill="none"></path>
-                                                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path>
-                                            </svg></span></span><span aria-hidden="true" jsname="fI6EEc" class="F7XJmb" data-number="5"><span class="Wi7KIe" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                                <path d="M0 0h24v24H0z" fill="none"></path>
-                                                <path d="M0 0h24v24H0z" fill="none"></path>
-                                                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path>
-                                            </svg></span></span>
-                                </div><span class="bp9Aid">11 Oktober 2022</span>
+                                <div aria-label="Diberi rating 5 bintang dari 5 bintang" role="img" class="iXRFPc">
+
+                                @for($i = 0; $i < $r->star; $i++)
+                                    <span aria-hidden="true" jsname="fI6EEc" class="F7XJmb" data-number="1" ssk="1#1"><span class="fill" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                        <path d="M0 0h24v24H0z" fill="none"></path>
+                                        <path d="M0 0h24v24H0z" fill="none"></path>
+                                        <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path>
+                                    </svg></span></span>
+                                @endfor
+                                @if($r->star < 5)
+                                    @for($i=$r->star; $i < 5; $i++)
+                                        <span aria-hidden="true" jsname="fI6EEc" class="F7XJmb" data-number="4"><span class="nofill" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                            <path d="M0 0h24v24H0z" fill="none"></path>
+                                            <path d="M0 0h24v24H0z" fill="none"></path>
+                                            <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path>
+                                        </svg></span></span>
+                                    @endfor
+                                 @endif
+
+                                </div><span class="bp9Aid">{{ \Carbon\Carbon::parse($r->created_at)->locale('id')->isoFormat('D MMMM Y') }}</span>
                             </div>
 
                         </div>
                         <div class="review-body mt-2">
-                            <p>Saya sangat senang dengan buku ini. buku ini menceritakan tentang kisah 5 orang bajak laut yang berusaha menjadi hokage dan mengumpulkan 7 bola naga agar menguasai soul society</p>
+                            <p>{{ $r->comment }}</p>
                         </div>
                         <!-- <div class="review-footer">
 
                     </div> -->
                     </div>
                 </div>
-        </div>
-        @endfor
+            </div>
+            @endforeach
     </div>
 </div>
 
@@ -175,12 +182,12 @@
                                 <!-- To display checked star rating icons -->
                                 @for($i = 0; $i < $rate->star; $i++)
                                     <span id="rate-{{$i+1}}" class="fa fa-star checked" onclick="starRate('{{$i+1}}', 'star')"></span>
-                                    @endfor
-                                    @if($rate->star < 5)
-                                        @for($i=$rate->star; $i < 5; $i++)
+                                @endfor
+                                @if($rate->star < 5)
+                                    @for($i=$rate->star; $i < 5; $i++)
                                         <span id="rate-{{$i+1}}" class="fa fa-star unchecked" onclick="starRate('{{$i+1}}', 'star')"></span>
-                                        @endfor
-                                    @endif
+                                    @endfor
+                                 @endif
                             </div>
                             <div class="form-group">
                                 <label for="message-text" class="col-form-label">Ulasan:</label>
@@ -191,7 +198,8 @@
                 </div>
                 <div class="modal-footer border-0" style="justify-content: center;">
                     <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+                    <button type="button" class="btn btn-danger" onclick="deleteData(id = '{{$rate->book_id}}', url = 'rate')">Hapus</button>
                     <button type="submit" class="btn btn-info">Simpan!</button>
                 </div>
             </form>
@@ -225,8 +233,8 @@
                                 <span id="rate-5" class="fa fa-star unchecked" onclick="starRate(5, 'addstar')"></span>
                             </div>
                             <div class="form-group">
-                                <label for="message-text" class="col-form-label">Ulasan:</label>
-                                <textarea class="form-control" id="message-text" name="message" required></textarea>
+                                <label for="comment-text" class="col-form-label">Ulasan:</label>
+                                <textarea class="form-control" id="comment-text" name="comment" required></textarea>
                             </div>
                             <input type="hidden" id="addstar" name="star" value="1">
                             <input type="hidden" name="bookid" value="{{$book->id}}">
@@ -245,6 +253,12 @@
 @endif
 @endif
 
+
+{{-- form delete hidden --}}
+<form action="" method="POST" id="form-delete">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+</form>
 
 @push('styles')
 <link href="{{ asset('css/admin/book/detail.css') }}" rel="stylesheet">

@@ -10,10 +10,10 @@
         <a href="#bookSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Book</a>
         <ul class="collapse list-unstyled" id="bookSubmenu">
             <li>
-                <a href="/favorite">Favorite</a>
+                <a href="/user-lend">Lend</a>
             </li>
             <li>
-                <a href="/user-lend">Lend</a>
+                <a href="/favorite">Favorite</a>
             </li>
         </ul>
     </li>

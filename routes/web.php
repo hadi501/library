@@ -35,13 +35,14 @@ Route::get('/login', [AuthController::class, 'index'])->name('login')->middlewar
 Route::post('/login', [AuthController::class, 'authenticate']);
 Route::get('/logout', [AuthController::class, 'logout']);
 Route::get('/book-detail/{id}', [BookController::class, 'show']);
+Route::get('/home-search', [BookController::class, 'search']);
 
 
 Route::middleware(['auth'])->group(function() {
 
     // User
     Route::get('/user-dashboard', [DashboardController::class, 'userIndex']);
-    Route::get('/user-lend', function () {return view('user.lend', ['searchBar' => 'on']);});
+    Route::get('/user-lend', [LendController::class, 'userLend']);
     Route::resource('favorite', FavoriteController::class);
     Route::resource('rate', RateController::class);
     Route::resource('tracker', TrackerController::class);

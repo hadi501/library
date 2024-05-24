@@ -1,53 +1,56 @@
 @extends('layout')
-@section('title', 'User Lend Book')
+@section('title', 'Lend Book')
 
 @section('content')
 
-<div class="row row-gap-3 justify-content-between" id="main-content">
+<!-- <div class="container mt-3"> -->
+    <table id="fine-book-table" class="table table-hover" style="width: 100%; padding: 1rem;">
+        <thead class="thead-dark">
+            <th>Cover</th>
+            <th>Title</th>
+            <th>Status</th>
+            <th>Kembali</th>
+        </thead>
+        <tbody>
 
-  @for($i = 0; $i < 50; $i++)
-    <!-- sudah benar
-    <h4>13 Januari 2024</h4> -->
+        @foreach($lends as $lend)
+            <tr>
+                <td> <img src="{{ asset('storage/book/' . $lend->book->cover) }}" alt="Book cover" width="100"></td>
+                <td>{{ $lend->book->title }}</td>
 
-    <div class="col-12 col-md-5 d-block border-bottom border-3">
-      <!-- <book-card bookid="128" bookname="Shahih Sunan Abu Daud (Seleksi Hadits Shahih dari Kitab Sunan Abu Daud)" bookyear="2006" bookcategory="Hadits" bookauthor="Al-Albani, Muhammad Nashruddin" bookpublisher="Pustaka Azzam" bookstatus="0" bookdetailurl="/book/B1709" bookfavoriteurl="..." bookfavorite="false" bookcover="{{ asset('images/book/kitab.jpg') }}"> -->
-      <div>
-        <div class="row mb-2">
-          <div class="col col-md-5 text-center ">
-            <div class="position-relative">
-              <img alt="book cover" class="img-fluid mx-auto book-cover" src="{{ asset('images/book/kitab.jpg') }}">
-            </div>
-          </div>
-          <div class="col col-md-7 pt-2 d-flex flex-column col-book">
-            <div class="col">
-              <a class="book-field text-dark" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" data-bs-source="bookDetail">
-                <h4 class="book-title"><!--?lit$116348074$-->Shahih Sunan Abu Daud (Seleksi Hadits Shahih dari Kitab Sunan Abu Daud)</h4>
-              </a>
+                @if ($lend->status == '1')
+                  @if(\Carbon\Carbon::parse($lend->return_date)->isPast())
+                    <td><button type="button" class="btn btn-danger" style="min-width: 70px;">Late</button></td>
+                  @else
+                    <td><button type="button" class="btn btn-success" style="min-width: 70px;">Lend</button></td>
+                  @endif
+                @else
+                  <td><button type="button" class="btn btn-info" style="min-width: 70px;">Done</button></td>
+                @endif
 
-              <h5 class="book-author"><!--?lit$116348074$-->Al-Albani, Muhammad Nashruddin</h5>
-              <!-- <p class="book-year">Ensiklopedia</p> -->
-            </div>
-            <div class="col d-flex align-items-end">
-              <div>
-                <p class="mb-0">Kembali</p>
-                <p class="category"><!--?lit$116348074$-->13 Januari 2024</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- </book-card> -->
-    </div>
-    @endfor
+                @if ($lend->status == '1')
+                <td>{{ \Carbon\Carbon::parse($lend->return_date)->locale('id')->isoFormat('dddd, D MMMM Y') }}</td>
+                @else
+                <td>{{ \Carbon\Carbon::parse($lend->updated_at)->locale('id')->isoFormat('dddd, D MMMM Y') }}</td>
+                @endif
+            </tr>
+        @endforeach
+        </tbody>
+    </table>
+<!-- </div> -->
 
+{{-- form delete hidden --}}
+<form action="" method="POST" id="form-delete">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+</form>
 
-</div>
 @push('styles')
-<link href="{{ asset('css/user/lend.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/user/lend.css') }}" rel="stylesheet">
 @endpush
 
 @push('scripts')
-<script type="text/javascript" src="{{ asset('js/user/lend.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/user/lend.js') }}"></script>
 @endpush
 
 @endsection

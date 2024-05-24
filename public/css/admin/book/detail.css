@@ -44,13 +44,13 @@
     text-align: left;
 }
 
-.qOrUJd {
+.fill {
     color: #0179ca;
     fill: #0179ca;
     stop-color: #0179ca;
 }
 
-.Wi7KIe {
+.nofill {
     fill: #b8b8b8;
     stop-color: #b8b8b8;
 }
@@ -132,9 +132,19 @@ textarea.form-control{
     min-height: 150px !important;
 }
 
-.bi-star-fill::before {
+.star {
     content: "\f55b";
     color: #007bff;
+}
+
+.heart {
+    content: "\f3f5";
+    color: #dc3545;
+}
+
+.bi-book-fill::before {
+    content: "\f192";
+    color: #17a2b8;
 }
 
 

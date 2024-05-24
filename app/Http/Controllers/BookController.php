@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Storage;
 
+use function Laravel\Prompts\search;
+
 class BookController extends Controller
 {
 
@@ -23,21 +25,29 @@ class BookController extends Controller
             $perPage = 10; // Jumlah data per muatan tambahan
             $page = $request->input('page', 1);
             $offset = ($page - 1) * $perPage;
-        
-            $books = DB::table('book')
-            ->take($perPage)
-            ->skip($offset)
-            ->inRandomOrder()
-            ->distinct()
-            ->get();
-        
+            if ($request->filled('search')) {
+                $books = DB::table('book')
+                    ->where('title', 'like', '%' . request('search') . '%')
+                    ->orWhere('author', 'like', '%' . request('search') . '%')
+                    ->take($perPage)
+                    ->skip($offset)
+                    ->get();
+            } else {
+                $books = DB::table('book')
+                    ->take($perPage)
+                    ->skip($offset)
+                    ->inRandomOrder()
+                    ->distinct()
+                    ->get();
+            }
             return response()->json($books);
         }
-
-        // $books = Book::all();
-        return view('index', ['searchBar' => 'on']);
+        if ($request->filled('searchvalue')) {
+            return view('index', ['searchBar' => 'on', 'searchvalue' => $request->searchvalue]);
+        } else{
+            return view('index', ['searchBar' => 'on']);
+        }
     }
-
 
     /**
      * Display a listing of the resource.
@@ -96,14 +106,13 @@ class BookController extends Controller
         $filename = $request->id . '.' . $request->cover->extension();
         $path = $request->cover->storeAs('public/book', $filename);
         $book->cover = $filename;
-        
+
         // Save to Database
         $book->save();
         $books = Book::all();
-        
-        Alert::success('Success!', 'Buku berhasil ditambahkan');
-        return redirect()->to('/book',)->with(['books' => $books,'searchBar' => 'off']);
 
+        Alert::success('Success!', 'Buku berhasil ditambahkan');
+        return redirect()->to('/book',)->with(['books' => $books, 'searchBar' => 'off']);
     }
 
     /**
@@ -111,27 +120,19 @@ class BookController extends Controller
      */
     public function show(string $id)
     {
-        $book = Book::find($id);
-       
+        $book  = Book::find($id);
+        $rates = Rate::where('book_id', $id)->get();
+        $grade = Rate::where('book_id', $id)->avg('star');
 
+        if (Auth::user()) {
 
-        if(Auth::user()){
-        
-            $rate = Rate::where([ 'user_id' => Auth::user()->id, 'book_id' => $id,])->first();
-            $fav = Favorite::where([ 'user_id' => Auth::user()->id, 'book_id' => $id,])->first();
-            
-            return view('admin.book.detail', ['book' => $book, 'rate' => $rate, 'fav' => $fav, 'searchBar' => 'off']);
-        
-        } else{
-            return view('admin.book.detail', ['book' => $book, 'searchBar' => 'off']);
+            $rate = Rate::where(['user_id' => Auth::user()->id, 'book_id' => $id])->first();
+            $fav = Favorite::where(['user_id' => Auth::user()->id, 'book_id' => $id])->first();
+
+            return view('admin.book.detail', ['book' => $book, 'rates' => $rates, 'rate' => $rate, 'fav' => $fav, 'grade' => (float)$grade, 'searchBar' => 'off']);
+        } else {
+            return view('admin.book.detail', ['book' => $book, 'rates' => $rates, 'grade' => (float)$grade, 'searchBar' => 'off']);
         }
-
-
-        // if (Auth::user()){
-            // $user = Auth::user();
-        // }
-        
-
     }
 
     /**
@@ -178,9 +179,9 @@ class BookController extends Controller
 
         $book->update();
         $books = Book::all();
-        
+
         Alert::success('Success!', 'Buku berhasil diedit');
-        return redirect()->to('/book',)->with(['books' => $books,'searchBar' => 'off']);
+        return redirect()->to('/book',)->with(['books' => $books, 'searchBar' => 'off']);
     }
 
     /**
@@ -197,6 +198,6 @@ class BookController extends Controller
 
         $books = Book::all();
         Alert::success('Success!', 'Buku berhasil dihapus');
-        return redirect()->to('/book',)->with(['books' => $books,'searchBar' => 'off']);
+        return redirect()->to('/book',)->with(['books' => $books, 'searchBar' => 'off']);
     }
 }

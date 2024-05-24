@@ -1,49 +1,43 @@
 @extends('layout')
-@section('title', 'Favorite Book')
+@section('title', 'Lend Book')
 
 @section('content')
 
-<div class="row row-gap-3 justify-content-between" id="main-content">
+<!-- <div class="container mt-3"> -->
+    <table id="fine-book-table" class="table table-hover" style="width: 100%; padding: 1rem;">
+        <thead class="thead-dark">
+            <th>Cover</th>
+            <th>Title</th>
+            <th>detail</th>
+        </thead>
+        <tbody>
 
-  @for($i = 0; $i < 50; $i++) <div class="col-12 col-md-5 d-block border-bottom border-3">
-    <!-- <book-card bookid="128" bookname="Shahih Sunan Abu Daud (Seleksi Hadits Shahih dari Kitab Sunan Abu Daud)" bookyear="2006" bookcategory="Hadits" bookauthor="Al-Albani, Muhammad Nashruddin" bookpublisher="Pustaka Azzam" bookstatus="0" bookdetailurl="/book/B1709" bookfavoriteurl="..." bookfavorite="false" bookcover="{{ asset('images/book/kitab.jpg') }}"> -->
-    <div>
-      <div class="row mb-2">
-        <div class="col col-md-5 text-center ">
-          <div class="position-relative">
-            <img alt="book cover" class="img-fluid mx-auto book-cover" src="{{ asset('images/book/kitab.jpg') }}">
-          </div>
-        </div>
-        <div class="col col-md-7 pt-2 d-flex flex-column col-book">
-          <div class="col">
-            <a class="book-field text-dark" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" data-bs-source="bookDetail">
-              <h4 class="book-title"><!--?lit$116348074$-->Shahih Sunan Abu Daud (Seleksi Hadits Shahih dari Kitab Sunan Abu Daud)</h4>
-            </a>
+        @foreach($favorites as $favorite)
+            <tr>
+                <td> <img src="{{ asset('storage/book/' . $favorite->book->cover) }}" alt="Book cover" width="100"></td>
+                <td>{{ $favorite->book->title }}</td>
+                <td>
+                <a href="/book-detail/{{ $favorite->book_id }}">
+                  <button type="button" class="btn btn-info"><i class="bi bi-info-circle-fill"></i></button>
+                </td>
+            </tr>
+        @endforeach
+        </tbody>
+    </table>
+<!-- </div> -->
 
-            <h5 class="book-author"><!--?lit$116348074$-->Al-Albani, Muhammad Nashruddin</h5>
-            <p class="book-year"><!--?lit$116348074$-->2006</p>
-          </div>
-          <div class="col d-flex align-items-end">
-            <div>
-              <p class="fw-bold mb-0">Kategori</p>
-              <p class="category"><!--?lit$116348074$-->Hadits</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- </book-card> -->
-</div>
-@endfor
+{{-- form delete hidden --}}
+<form action="" method="POST" id="form-delete">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+</form>
 
-
-</div>
 @push('styles')
-<link href="{{ asset('css/user/favorite.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/user/favorite.css') }}" rel="stylesheet">
 @endpush
 
 @push('scripts')
-<script type="text/javascript" src="{{ asset('js/user/favorite.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/user/favorite.js') }}"></script>
 @endpush
 
 @endsection

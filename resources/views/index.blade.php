@@ -13,8 +13,11 @@
 @endpush
 
 @push('scripts')
+
 <script type="text/javascript" src="{{ asset('js/index.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/home.js') }}"></script>
+
+
 @endpush
 
 @endsection
