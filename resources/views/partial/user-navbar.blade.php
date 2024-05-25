@@ -37,7 +37,7 @@
         </ul>
     </li>
     <li>
-        <a href="/profile">Profile</a>
+        <a href="/user-profile">Profile</a>
     </li>
 
     <li>

@@ -30,7 +30,7 @@ class LendController extends Controller
      */
     public function userLend()
     {
-        $lends = Lend::with(['user','book'])->where('user_id', Auth::user()->id)->orderBy('id', 'desc')->get();
+        $lends = Lend::with(['user','book'])->orderBy('id', 'desc')->get();
         $carbon = Carbon::class;
 
         return view('user.lend', ['lends' => $lends, 'carbon' => $carbon, 'searchBar' => 'off']);

@@ -14,4 +14,9 @@ class EncryptCookies extends Middleware
     protected $except = [
         //
     ];
+
+    protected function decryptCookie($name, $cookie)
+    {
+        return parent::decryptCookie($name, is_array($cookie) ? $cookie : urldecode($cookie));
+    }
 }

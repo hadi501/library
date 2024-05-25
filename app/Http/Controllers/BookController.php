@@ -112,7 +112,7 @@ class BookController extends Controller
         $books = Book::all();
 
         Alert::success('Success!', 'Buku berhasil ditambahkan');
-        return redirect()->to('/book',)->with(['books' => $books, 'searchBar' => 'off']);
+        return redirect()->to('/book')->with(['books' => $books, 'searchBar' => 'off']);
     }
 
     /**

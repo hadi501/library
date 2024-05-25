@@ -15,37 +15,29 @@
 	<body>
 	<section class="ftco-section">
 		<div class="container">
+		@include('sweetalert::alert')
 			<div class="row justify-content-center">
 				<div class="col-md-12 col-lg-10">
 					<div class="wrap d-md-flex">
 						<div class="img" style="background-image: url(images/bg.jpg);">
 			      </div>
 						<div class="login-wrap p-4 p-md-5">
-			      	<div class="d-flex">
-			      		<div class="w-100">
-			      			<h3 class="mb-4">Sign In</h3>
-			      		</div>
-			      	</div>
-						<form action="/login" method="POST" class="signin-form">
+						<form action="/changepass" method="POST" class="signin-form">
 						@csrf
 			      		<div class="form-group mb-3">
-			      			<label class="label" for="name">Email</label>
-			      			<input name="email" id="email" type="email" class="form-control @error('email') is-invalid @enderror" placeholder="email" value = "{{ old('email') }}" autofocus required>
-							@error('email')
+			      			<label class="label" for="name">New Password</label>
+			      			<input name="password" id="password" type="text" class="form-control @error('password') is-invalid @enderror" placeholder="password" autofocus required>
+							@error('password')
 								<div class="invalid-feedback">
 									{{$message}}
 								</div>
 							@enderror
 			      		</div>
-						<div class="form-group mb-3">
-							<label class="label" for="password">Password</label>
-							<input name="password" id="password" type="password" class="form-control" placeholder="Password" required>
-						</div>
+                          <input name="token" id="token" type="hidden" value="{{$token}}">
 						<div class="form-group">
-							<button type="submit" class="form-control btn btn-primary rounded submit px-3">Sign In</button>
+							<button type="submit" class="form-control btn btn-primary rounded submit px-3">Send</button>
 						</div>
 		          </form>
-		          <p class="text-center">Forgot password? <a href="/email">Click Here</a></p>
 		        </div>
 		      </div>
 				</div>

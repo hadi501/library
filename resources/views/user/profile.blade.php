@@ -1,5 +1,5 @@
 @extends('layout')
-@section('title', 'Profile')
+@section('title', 'Edit User')
 
 @section('content')
 
@@ -10,61 +10,65 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-12 col-md-6">
-            <div style="padding: 1rem 0;">
-                <div class="mb-4 d-flex justify-content-center">
-                    <img id="selectedImage" src="https://mdbootstrap.com/img/Photos/Others/placeholder.jpg" class="rounded-circle" style="width: 200px; height: 200px; object-fit: cover;" alt="example placeholder" />
-                </div>
-                <div class="d-flex justify-content-center">
-                    <div data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-rounded">
-                        <label class="form-label text-white m-1" for="customFile1">Choose file</label>
-                        <input type="file" class="form-control d-none" id="customFile1" onchange="displaySelectedImage(event, 'selectedImage')" />
+
+        <form action="{{ route('update.user', $user->id) }}" method="POST" enctype="multipart/form-data">
+            
+            {{ csrf_field() }}
+            
+            <div class="col-12 col-md-6">
+                <div style="padding: 1rem 0;">
+                    <div class="mb-4 d-flex justify-content-center">
+                        <img id="picture_img" src="{{ asset('storage/user/' . $user->picture) }}" class="rounded-circle" style="width: 200px; height: 200px; object-fit: cover;" alt="example placeholder" />
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <div data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-rounded">
+                            <label class="form-label text-white m-1" for="picture">Choose file</label>
+                            <input type="file" class="form-control d-none" id="picture" name="picture" onchange="displaySelectedImage(event, 'picture_img')" />
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="col-12 col-md-6">
-            <div class="form-group mb-3">
-                <label for="kode" class="mb-2">NIM</label>
-                <input type="number" class="form-control custom-form-control " name="book_code" id="book_code" required="" value="" maxlength="10">
-            </div>
+            <div class="col-12 col-md-6">
+                <div class="form-group mb-3">
+                    <label for="id" class="mb-2">NIM</label>
+                    <input type="number" class="form-control custom-form-control" name="id" value="{{ $user->id }}" readonly>
+                </div>
 
-            <div class="form-group mb-3">
-                <label for="kode" class="mb-2">Nama Lengkap</label>
-                <input type="text" class="form-control custom-form-control " name="book_code" id="book_code" required="" value="" maxlength="10">
-            </div>
-            <div class="form-group mb-3">
-                <label for="kode" class="mb-2">Email</label>
-                <input type="text" class="form-control custom-form-control " name="book_code" id="book_code" required="" value="" maxlength="10">
-            </div>
-            <div class="form-group mb-3">
-                <label for="kode" class="mb-2">Password</label>
-                <input type="text" class="form-control custom-form-control " name="book_code" id="book_code" required="" value="" maxlength="10">
-                <p class="pt-2">Ganti Password <a data-toggle="tab" href="#signup">Click Here</a></p>
-            </div>            
-            <div class="form-group mb-3">
-                <label for="kode" class="mb-2">Telepon</label>
-                <input type="text" class="form-control custom-form-control " name="book_code" id="book_code" required="" value="" maxlength="10">
-            </div>
-            <div class="form-group mt-4 text-center">
-                <button type="submit" class="btn btn-dark">
-                    Selesai
-                </button>
-            </div>
+                <div class="form-group mb-3">
+                    <label for="username" class="mb-2">Nama Lengkap</label>
+                    <input type="text" class="form-control custom-form-control" name="username" id="username" value="{{ $user->username }}" required>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="email" class="mb-2">Email</label>
+                    <input type="email" class="form-control custom-form-control" name="email" id="email" value="{{ $user->email }}" required>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="phone" class="mb-2">Telepon</label>
+                    <input type="number" class="form-control custom-form-control" name="phone" id="phone" value="0{{ $user->phone }}" required>
+                </div>
 
+                <div class="form-group mb-3">
+                    <p class="pt-2">Ganti Password <a href="/email">Click Here</a></p>
+                </div>
 
-        </div>
+                <div class="form-group mt-4 text-center">
+                    <button type="submit" class="btn btn-dark">
+                        Selesai
+                    </button>
+                </div>
+            </div>
+        </form>
     </div>
 </div>
 
 
 @push('styles')
-<link href="{{ asset('css/user/profile.css') }}" rel="stylesheet">
+<link href="{{ asset('css/admin/user/add.css') }}" rel="stylesheet">
 @endpush
 
 @push('scripts')
-<script type="text/javascript" src="{{ asset('js/user/profile.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/admin/user/add.js') }}"></script>
 @endpush
 
 @endsection

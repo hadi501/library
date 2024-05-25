@@ -41,3 +41,9 @@
 .col-md-4 {
     min-width: 200px;
 }
+
+.detail{
+    font-family: cursive;
+    font-weight: 600;
+    margin: 0 20px;
+}
