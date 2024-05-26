@@ -23,6 +23,8 @@ $(document).on("click", ".detail", function () {
 
     $("#edit-activity").val( $(this).data('activity') );
     $("#edit-amount").val( $(this).data('amount') );
+    $("#edit-note").val( $(this).data('note') );
+    $("#edit-id").val( $(this).data('id') );
     $("#edit-type").val( type );
 });
 

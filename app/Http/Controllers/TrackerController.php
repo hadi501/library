@@ -11,7 +11,7 @@ class TrackerController extends Controller
      */
     public function index()
     {
-        //
+        return view('partial.notfound', ['searchBar' => 'off']);
     }
 
     /**

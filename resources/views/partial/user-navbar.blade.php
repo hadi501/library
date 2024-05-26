@@ -32,7 +32,7 @@
                 <a href="/tracker">My Book</a>
             </li>
             <li>
-                <a href="#">History</a>
+                <a href="/tracker">Reading</a>
             </li>
         </ul>
     </li>

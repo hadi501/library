@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use App\Models\Book;
 use App\Models\Lend;
 use App\Models\Favorite;
 use Illuminate\Support\Facades\DB;
@@ -12,7 +14,10 @@ class DashboardController extends Controller
 {
     public function adminIndex()
     {
-        return view('admin.dashboard', ['searchBar' => 'off']);
+        $users = User::all();
+        $books = Book::all();
+        $lends = Lend::all();
+        return view('admin.dashboard', ['users' => $users, 'books' => $books, 'lends' => $lends, 'searchBar' => 'off']);
     }
 
     public function userIndex(){

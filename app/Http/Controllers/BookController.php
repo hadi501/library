@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Book;
+use App\Models\Lend;
+use App\Models\Fine;
 use App\Models\Rate;
 use App\Models\Favorite;
 use Illuminate\Support\Facades\DB;
@@ -190,11 +192,16 @@ class BookController extends Controller
     public function destroy(string $id)
     {
         $book = Book::find($id);
+
         if ($book->cover !== 'cover_default.jpg') {
             Storage::delete('public/book/' . $book->cover);
         }
 
         $book->delete();
+        Lend::where('book_id', $id)->delete();
+        Fine::where('book_id', $id)->delete();
+        Rate::where('book_id', $id)->delete();
+        Favorite::where('book_id', $id)->delete();
 
         $books = Book::all();
         Alert::success('Success!', 'Buku berhasil dihapus');

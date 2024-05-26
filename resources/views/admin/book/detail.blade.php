@@ -76,7 +76,25 @@
                     <li><!----><span> Kategori <p>{{ $book->category }}</p></span><!----><span> Bahasa <p>{{ $book->language }}</p></span></li>
                     <li><!----><span> Penerjemah <p>{{ $book->translator }}</p></span><!----><span> Tahun <p>{{ $book->year }}</p></span></li>
                     <li><!----><span> Halaman <p>{{ $book->page }}</p></span><!----><span> Volume <p>{{ $book->volume }}</p></span></li>
-                    <li><!----><span> Tipe Buku <p>{{ $book->type }}</p></span><!----><span> Status <p>{{ $book->status }}</p></span></li>
+                    <li>
+                        <span> Tipe Buku
+                            @if($book->type == '0')
+                            <p>R</p>
+                            @else
+                            <p>Non R</p>
+                            @endif
+                        </span>
+                        <span> Status 
+                            @if($book->status == '0')
+                            <p style="font-weight:600; color: #007bff;">Tersedia</p>
+                            @elseif($book->status == '1')
+                            <p style="font-weight:600; color: #dc3545;">Dipinjam</p>
+                            @else
+                            <p style="font-weight:600; color: black;">Hilang</p>
+                            @endif
+                        </span>
+                    </li>
+                
                 </ul><!---->
             </div>
         </div>
@@ -191,7 +209,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="message-text" class="col-form-label">Ulasan:</label>
-                                <textarea class="form-control" id="message-text" name="comment">{{ $rate->comment }}</textarea>
+                                <textarea class="form-control" id="message-text" name="comment" maxlength="500" required>{{ $rate->comment }}</textarea>
                             </div>
                             <input type="hidden" id="star" name="star" value="{{ $rate->star }}">
                     </fieldset>
@@ -234,7 +252,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="comment-text" class="col-form-label">Ulasan:</label>
-                                <textarea class="form-control" id="comment-text" name="comment" required></textarea>
+                                <textarea class="form-control" id="comment-text" name="comment" maxlength="500" required></textarea>
                             </div>
                             <input type="hidden" id="addstar" name="star" value="1">
                             <input type="hidden" name="bookid" value="{{$book->id}}">

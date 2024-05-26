@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Finance;
+use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Http\Request;
 
 class FinanceController extends Controller
@@ -11,7 +13,8 @@ class FinanceController extends Controller
      */
     public function index()
     {
-        return view('admin.finance.index', ['searchBar' => 'off']);
+        $finances = Finance::orderBy('id', 'desc')->get();
+        return view('admin.finance.index', ['finances' => $finances, 'searchBar' => 'off']);
     }
 
     /**
@@ -27,7 +30,21 @@ class FinanceController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $finance = new Finance();
+
+        $finance->activity  = $request->activity;
+        $finance->amount    = $request->amount;
+        $finance->type      = $request->type;
+        $finance->note      = $request->note;
+
+        // Save to Database
+        $finance->save();
+        // $finances = Finance::all();
+
+        Alert::success('Success!', 'Transaksi berhasil ditambahkan');
+        // return redirect()->to('/finance')->with(['finances' => $finances, 'searchBar' => 'off']);
+        return redirect()->action([FinanceController::class, 'index']);
+    
     }
 
     /**
@@ -51,7 +68,20 @@ class FinanceController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        // dd($request);
+        $finance = Finance::find($request->id);
+
+        $finance->activity  = $request->activity;
+        $finance->amount    = $request->amount;
+        $finance->type      = $request->type;
+        $finance->note      = $request->note;
+
+        $finance->update();
+        // $finances = Finance::all();
+
+        Alert::success('Success!', 'Transaksi berhasil diedit');
+        // return redirect()->to('/finance',)->with(['finances' => $finances, 'searchBar' => 'off']);
+        return redirect()->action([FinanceController::class, 'index']);
     }
 
     /**
@@ -59,6 +89,13 @@ class FinanceController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $finance = Finance::find($id);
+
+        $finance->delete();
+
+        // $finances = Finance::all();
+        Alert::success('Success!', 'Transaksi berhasil dihapus');
+        // return redirect()->to('/finance',)->with(['finances' => $finances, 'searchBar' => 'off']);
+        return redirect()->action([FinanceController::class, 'index']);
     }
 }

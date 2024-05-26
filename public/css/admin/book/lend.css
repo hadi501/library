@@ -142,6 +142,10 @@ body {
     font-size: 0.8rem;
 }
 
+.swal2-cancel, .swal2-confirm {
+    margin: 0 5px;
+} 
+
 /* div:where(.swal2-container) button:where(.swal2-styled).swal2-confirm{
     background: #f8b739 !important;
     border-color: #f8b739 !important;

@@ -4,10 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Lend;
+use App\Models\Fine;
+use App\Models\Rate;
+use App\Models\Favorite;
+use App\Models\Passtoken;
 use Illuminate\Support\Facades\Auth;
-use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
+use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Contracts\Encryption\DecryptException;
 
 class UserController extends Controller
@@ -179,6 +184,11 @@ class UserController extends Controller
         }
 
         $user->delete();
+        Lend::where('user_id', $id)->delete();
+        Fine::where('user_id', $id)->delete();
+        Rate::where('user_id', $id)->delete();
+        Favorite::where('user_id', $id)->delete();
+        Passtoken::where('email', $user->email)->delete();
 
         $users = User::all();
         Alert::success('Success!', 'User berhasil dihapus');

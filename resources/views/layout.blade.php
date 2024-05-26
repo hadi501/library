@@ -63,7 +63,7 @@
 
                 <div class="footer">
                     @if(Auth::check())
-                    <p>kamu login sebagai {{ Auth::user()->username }}</p>
+                    <p>Selamat datang, {{ Auth::user()->username }}</p>
                     @else
                     <p>all reserved for Aisock.inc</p>
                     @endif

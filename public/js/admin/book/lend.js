@@ -135,9 +135,15 @@ function statusCheck(){
             return false;
         }
 
-        if(books[index].status != 0){
+        if(books[index].status == 1){
             removeDetailLend();
             Swal.fire("Error!", "Status buku " + books[index].title + " masih dipinjam. Harap selesaikan dahulu peminjaman", "error");
+            return false;
+        }
+
+        if(books[index].status == 2){
+            removeDetailLend();
+            Swal.fire("Error!", "Status buku " + books[index].title + " hilang. Jika ada, harap update data dahulu", "error");
             return false;
         }
     }
@@ -336,23 +342,54 @@ function updateData(id){
 function finishLend(id){
     const formDelete = document.querySelector('#form-delete');
 
-    Swal.fire({
+    // Swal.fire({
+    //     title: "Books returned?",
+    //     text: "You won't be able to revert this!",
+    //     icon: "warning",
+    //     // showCancelButton: true,
+    //     showDenyButton: true,
+    //     confirmButtonColor: "#3085d6",
+    //     denyButtonColor: "#d33",
+    //     confirmButtonText: "Yes, returned!",
+    //     denyButtonText: "Book Lost!"
+    //   }).then((result) => {
+    //     if (result.isConfirmed) {
+    //         formDelete.setAttribute('action', `/lend/` + id);
+    //         document.getElementById("status").value = "0";
+    //         formDelete.submit();
+    //         return;
+    //     } else if (result.isDenied){
+    //         formDelete.setAttribute('action', `/lend/` + id);
+    //         formDelete.submit();
+    //         return;
+    //     }
+    //   });
+
+    const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+          confirmButton: "btn btn-info",
+          cancelButton: "btn btn-danger"
+        },
+        buttonsStyling: false
+      });
+      swalWithBootstrapButtons.fire({
         title: "Books returned?",
         text: "You won't be able to revert this!",
         icon: "warning",
-        // showCancelButton: true,
-        showDenyButton: true,
-        confirmButtonColor: "#3085d6",
-        denyButtonColor: "#d33",
-        confirmButtonText: "Yes, returned!",
-        denyButtonText: "Book Lost!"
+        showCancelButton: true,
+        confirmButtonText: "Returned!",
+        cancelButtonText: "Book lost!",
+        reverseButtons: true
       }).then((result) => {
         if (result.isConfirmed) {
             formDelete.setAttribute('action', `/lend/` + id);
             document.getElementById("status").value = "0";
             formDelete.submit();
             return;
-        } else{
+        } else if (
+          /* Read more about handling dismissals below */
+          result.dismiss === Swal.DismissReason.cancel
+        ) {
             formDelete.setAttribute('action', `/lend/` + id);
             formDelete.submit();
             return;

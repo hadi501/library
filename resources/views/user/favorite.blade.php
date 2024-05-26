@@ -1,5 +1,5 @@
 @extends('layout')
-@section('title', 'Lend Book')
+@section('title', 'Favorite Book')
 
 @section('content')
 
