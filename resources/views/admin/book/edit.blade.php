@@ -38,11 +38,11 @@
 
                 <div class="form-group mb-3">
                     <label for="title" class="mb-2">Judul</label>
-                    <input type="text" class="form-control custom-form-control" name="title" required value="{{ $book->title }}" maxlength="100">
+                    <input type="text" class="form-control custom-form-control" name="title" value="{{ $book->title }}" required maxlength="150">
                 </div>
                 <div class="form-group mb-3">
                     <label for="author" class="mb-2">Penulis</label>
-                    <input type="text" class="form-control custom-form-control" name="author" value="{{ $book->author }}" required>
+                    <input type="text" class="form-control custom-form-control" name="author" value="{{ $book->author }}" required maxlength="100">
                 </div>
                 <div class="form-group mb-3">
                     <label for="editor" class="mb-2">Editor</label>
