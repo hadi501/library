@@ -6,7 +6,7 @@
 <div class="container mt-4 py-4">
     <div class="row justify-content-center align-items-center border-bottom mb-3">
         <div class="col-12 col-md-6 mb-4 text-center">
-            <img src="{{ asset('storage/book/' . $book->cover) }}" alt="Book Cover" class="book-detail-cover" width="175px">
+            <img src="{{ asset('storage/public/book/' . $book->cover) }}" alt="Book Cover" class="book-detail-cover" width="175px">
             <div class="row row-title pt-3 m-auto">
                 <div class="col">
                     <h6 style="font-size: 18px;"><b>{{ $book->title }}</b></h6>
@@ -136,7 +136,7 @@
                 <div class="my-2 review-section">
                     <div class="review">
                         <div class="review-head">
-                            <img src="{{ asset('storage/user/' . $r->user->picture) }}" class="review-pp" width="50px">
+                            <img src="{{ asset('storage/public/user/' . $r->user->picture) }}" class="review-pp" width="50px">
                             <h6 class="review-name">{{$r->user->username}}</h6>
                             <div class="Jx4nYe mt-3">
                                 <div aria-label="Diberi rating 5 bintang dari 5 bintang" role="img" class="iXRFPc">
