@@ -5,7 +5,7 @@
 
 <div class="container">
 
-<img src="{{ asset('storage/public/image/not_found.jpg') }}" width="300px"> <br>
+<img src="{{ asset('storage/image/not_found.jpg') }}" width="300px"> <br>
 <h6>Beli Kaos Kaki hub: <a href="https://wa.me/62895354488400">0895364488400</a></h6>
 
 </div>

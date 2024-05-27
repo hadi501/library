@@ -34,9 +34,9 @@
             
                 
                 @if(Auth::check())
-                <a href="#" class="img logo rounded-circle mb-5" style="background-image: url('/storage/public/user/{{ Auth::user()->picture }}');"></a>
+                <a href="#" class="img logo rounded-circle mb-5" style="background-image: url('/storage/user/{{ Auth::user()->picture }}');"></a>
                 @else
-                <a href="#" class="img logo rounded-circle mb-5" style="background-image: url('/storage/public/user/picture_default.png');"></a>
+                <a href="#" class="img logo rounded-circle mb-5" style="background-image: url('/storage/user/picture_default.png');"></a>
                 @endif
 
 

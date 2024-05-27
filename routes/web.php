@@ -80,10 +80,3 @@ Route::middleware(['auth'])->group(function() {
 // JSON data
 Route::get('/get-book', [Controller::class, 'getBook']);
 Route::get('/get-user', [Controller::class, 'getUser']);
-
-Route::get('/storage-link', function(){
-	$targetFolder = storage_path('app/public');
-	$linkFolder = $_SERVER['DOCUMENT_ROOT'].'/storage';
-	symlink($targetFolder, $linkFolder);
-	echo 'Success';
-});

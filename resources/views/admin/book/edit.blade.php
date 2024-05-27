@@ -19,7 +19,7 @@
             <div class="col-12 col-md-6">
                 <div style="padding: 1rem 0;">
                     <div class="mb-4 d-flex justify-content-center">
-                        <img id="cover_img" src="{{ asset('storage/public/book/' . $book->cover) }}" alt="example placeholder" style="width: 165px; height: 225px; object-fit: cover;" />
+                        <img id="cover_img" src="{{ asset('storage/book/' . $book->cover) }}" alt="example placeholder" style="width: 165px; height: 225px; object-fit: cover;" />
                     </div>
                     <div class="d-flex justify-content-center">
                         <div data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-rounded">

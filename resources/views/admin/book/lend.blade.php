@@ -18,7 +18,7 @@
 
         @foreach($lends as $lend)
         <tr>
-            <td> <img src="{{ asset('storage/public/book/' . $lend->book->cover) }}" alt="Book cover" width="100"></td>
+            <td> <img src="{{ asset('storage/book/' . $lend->book->cover) }}" alt="Book cover" width="100"></td>
             <td>{{ $lend->book->title }}</td>
             <td>{{ $lend->user->username }}</td>
             @if(\Carbon\Carbon::parse($lend->return_date)->isPast())

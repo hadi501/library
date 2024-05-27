@@ -18,7 +18,7 @@
         @foreach($books as $book)
         <tr>
             <td>{{ $book->id }}</td>
-            <td> <img src="{{ asset('storage/public/book/' . $book->cover) }}" alt="Book cover" width="100"></td>
+            <td> <img src="{{ asset('storage/book/' . $book->cover) }}" alt="Book cover" width="100"></td>
             <td>{{ $book->title }}</td>
             <td>{{ $book->author }}</td>
             <td>{{ $book->publisher }}</td>

@@ -18,7 +18,7 @@
             <div class="col-12 col-md-6">
                 <div style="padding: 1rem 0;">
                     <div class="mb-4 d-flex justify-content-center">
-                        <img id="picture_img" src="{{ asset('storage/public/user/' . $user->picture) }}" class="rounded-circle" style="width: 200px; height: 200px; object-fit: cover;" alt="example placeholder" />
+                        <img id="picture_img" src="{{ asset('storage/user/' . $user->picture) }}" class="rounded-circle" style="width: 200px; height: 200px; object-fit: cover;" alt="example placeholder" />
                     </div>
                     <div class="d-flex justify-content-center">
                         <div data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-rounded">
