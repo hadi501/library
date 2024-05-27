@@ -80,3 +80,8 @@ Route::middleware(['auth'])->group(function() {
 // JSON data
 Route::get('/get-book', [Controller::class, 'getBook']);
 Route::get('/get-user', [Controller::class, 'getUser']);
+
+Route::get('/generate', function(){
+    \Illuminate\Support\Facades\Artisan::call('storage:link');
+    echo 'ok';
+});
