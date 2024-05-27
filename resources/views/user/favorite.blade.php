@@ -14,7 +14,7 @@
 
         @foreach($favorites as $favorite)
             <tr>
-                <td> <img src="{{ asset('storage/book/' . $favorite->book->cover) }}" alt="Book cover" width="100"></td>
+                <td> <img src="{{ asset('storage/public/book/' . $favorite->book->cover) }}" alt="Book cover" width="100"></td>
                 <td>{{ $favorite->book->title }}</td>
                 <td>
                 <a href="/book-detail/{{ $favorite->book_id }}">

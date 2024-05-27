@@ -18,7 +18,7 @@
 
         @foreach($fines as $fine)
             <tr>
-                <td> <img src="{{ asset('storage/book/' . $fine->book->cover) }}" alt="Book cover" width="100"></td>
+                <td> <img src="{{ asset('storage/public/book/' . $fine->book->cover) }}" alt="Book cover" width="100"></td>
                 <td>{{ $fine->book->title }}</td>
                 <td>{{ $fine->user->username }}</td>
                 <td>{{ \Carbon\Carbon::parse($fine->lend->return_date)->locale('id')->isoFormat('dddd, D MMMM Y') }}</td>
