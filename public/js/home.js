@@ -29,7 +29,7 @@ function loadMoreData() {
                                 <div class="row mb-2">
                                     <div class="col col-xl-5 text-center col-image">
                                     <div class="position-relative">
-                                        <img alt="book cover" class="img-fluid mx-auto book-cover" src="storage/book/${item.cover}">
+                                        <img alt="book cover" class="img-fluid mx-auto book-cover" src="storage/public/book/${item.cover}">
                                     </div>
                                     </div>
                                     <div class="col col-xl-7 pt-2 d-flex flex-column col-book">
