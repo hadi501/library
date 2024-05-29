@@ -118,3 +118,17 @@ Route::get('/config-cache', function() {
     $exitCode = Artisan::call('config:cache');
     return '<h1>Clear Config cleared</h1>';
 });
+
+
+Route::get('/key', function(){
+    try {
+
+        artisan::call('key:generate');
+        return '<h1>Key generate</h1>';
+      
+      } catch (\Exception $e) {
+      
+          echo $e->getMessage();
+      }
+    
+});
