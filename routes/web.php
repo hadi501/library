@@ -59,6 +59,7 @@ Route::middleware(['auth'])->group(function() {
  
     // Admin, Bendahara, Super Admin
     Route::middleware(['checkRole:1|2|3'])->group(function() {
+        Route::get('/lend-index', [LendController::class, 'index']);
         Route::resource('book', BookController::class);
         Route::resource('lend', LendController::class);
         Route::resource('fine', FineController::class);

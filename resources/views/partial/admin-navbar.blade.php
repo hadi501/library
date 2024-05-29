@@ -15,7 +15,7 @@
                 <a href="/book">Home</a>
             </li>
             <li>
-                <a href="/lend">Lend</a>
+                <a href="/lend-index">Lend</a>
             </li>
             <li>
                 <a href="/fine">Fine</a>
