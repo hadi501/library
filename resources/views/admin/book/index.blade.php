@@ -10,7 +10,7 @@
         <th>Cover</th>
         <th>Title</th>
         <th>Author</th>
-        <th>publisher</th>
+        <th>category</th>
         <th>Action</th>
     </thead>
 
@@ -21,7 +21,7 @@
             <td> <img src="{{ asset('storage/public/book/' . $book->cover) }}" alt="Book cover" width="100"></td>
             <td>{{ $book->title }}</td>
             <td>{{ $book->author }}</td>
-            <td>{{ $book->publisher }}</td>
+            <td>{{ $book->category }}</td>
             <td>
                 <a href="{{ route('book.edit', $book->id) }}" class="btn btn-success">
                     <i class="bi bi-pencil"></i>

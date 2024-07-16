@@ -36,3 +36,46 @@
   font-size: clamp(0.75rem, 0.9vw, 0.9rem);
   font-style: italic;
 }
+
+.offcanvas-bottom{
+  height: 50% !important;
+}
+
+.detail-section ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.detail-section ul li {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.detail-section ul li span {
+  width: 50%;
+  /* font-family: Nunito, serif; */
+  font-weight: 500;
+  /* font-size: 17px; */
+  font-size: clamp(0.75rem, 1.5vw, 1rem); 
+  color: #6d6d6d;
+}
+
+.book-cover-offcanvas, .btn-offcanvas{
+  margin: auto !important;    
+  display: block !important;
+}
+
+.bi-arrow-right-square-fill::before {
+  content: "\f136";
+  vertical-align: middle;
+}
+
+.detail-section h3 {
+  /* font-family: Nunito, serif; */
+  font-weight: 600;
+  /* font-size: 18px; */
+  font-size: clamp(1rem, 2vw, 1.35rem); 
+  color: #151515;
+  margin-bottom: 15px;
+}

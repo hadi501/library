@@ -29,13 +29,13 @@ function loadMoreData() {
                                 <div class="row mb-2">
                                     <div class="col col-xl-5 text-center col-image">
                                     <div class="position-relative">
-                                        <img alt="book cover" class="img-fluid mx-auto book-cover" src="storage/public/book/${item.cover}">
+                                        <img alt="book cover" class="img-fluid mx-auto book-cover" src="storage/public/book/${item.cover}" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">
                                     </div>
                                     </div>
                                     <div class="col col-xl-7 pt-2 d-flex flex-column col-book">
                                     <div class="col">
                                         <a class="book-field text-dark" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" data-bs-source="bookDetail">
-                                        <h5 class="book-title"><a href="/book-detail/${item.id}" class="text-black">${item.title}</a></h5>
+                                        <h5 class="book-title"><a class="book-field text-dark" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" data-bs-source="bookDetail"></a><a href="/book-detail/${item.id}" class="text-black">${item.title}</a></h5>
                                         </a>
                                         <h5 class="book-author">${item.author}</h5>
                                         <p class="book-year">${item.year}</p>
