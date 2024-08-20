@@ -34,9 +34,9 @@ function loadMoreData() {
                                     </div>
                                     <div class="col col-xl-7 pt-2 d-flex flex-column col-book">
                                     <div class="col">
-                                        <a class="book-field text-dark" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" data-bs-source="bookDetail">
-                                        <h5 class="book-title"><a class="book-field text-dark" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" data-bs-source="bookDetail"></a><a href="/book-detail/${item.id}" class="text-black">${item.title}</a></h5>
-                                        </a>
+                                        
+                                        <h5 class="book-title detail" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom" data-id="${item.id}" data-title="${item.title}" data-author="${item.author}" data-editor="${item.editor}" data-publisher="${item.publisher}" data-category="${item.category}" data-year="${item.year}" data-type="${item.type}" data-status="${item.status}">${item.title}</h5>
+                                        
                                         <h5 class="book-author">${item.author}</h5>
                                         <p class="book-year">${item.year}</p>
                                     </div>

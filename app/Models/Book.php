@@ -22,8 +22,8 @@ class Book extends Model
         'page',
         'volume',
         'synopsis',
-        'type',
-        'status',
+        'type',     // 0 = R, 1 = Non R
+        'status',   // 0 = tersedia, 1 = dipinjam, 2 = hilang
         'cover',
         'created_at',
         'updated_at'
