@@ -7,12 +7,15 @@ $(".btn").on("click", function (e) {
 $(document).on("click", ".detail", function () {
 
     let id = $(this).data('id');
+    let img = $(this).data('cover');
     
     let type = $(this).data('type');
     let status = $(this).data('status');
 
     let type0 = document.getElementById("type");
     let status0 = document.getElementById("status");
+
+    $("#book-cover").attr("src", `storage/public/book/${img}`);
 
     $("a").attr("href", `/book-detail/${id}`)
     document.getElementById("id").innerHTML = id;

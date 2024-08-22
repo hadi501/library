@@ -20,7 +20,7 @@
     <div class="container">
       <div class="row">
         <div class="col col-lg-6 mb-4">
-          <img alt="book cover" class="mx-auto book-cover-offcanvas pb-3" src="storage/public/book/cover_default.jpg" width="145px">
+          <img id="book-cover" alt="book cover" class="mx-auto book-cover-offcanvas pb-3" width="145px">
           <h3 class="book-pradetail-title" id="title">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde!</h3>
         </div>
   
