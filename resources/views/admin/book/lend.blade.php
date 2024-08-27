@@ -40,7 +40,7 @@
                 <td style="color: green;">{{ \Carbon\Carbon::parse($lend->return_date)->locale('id')->isoFormat('dddd, D MMMM Y') }}</td>
             @endif
             
-            <td><a target="_blank" rel="noopener noreferrer" class="phone" href="https://wa.me/62{{ $lend->user->phone }}" style="color: #2098ce !important;">0{{ $lend->user->phone }}</a></td>
+            <td><a target="_blank" rel="noopener noreferrer" class="phone" href="https://wa.me/62{{ $lend->user->phone ?? ' ' }}" style="color: #2098ce !important;">0{{ $lend->user->phone ?? 'None' }}</a></td>
             <td>
                 <a href="#" class="btn btn-info" onclick="updateData(id = '{{$lend->id}}')">
                     <i class="bi bi-plus-square"></i>
