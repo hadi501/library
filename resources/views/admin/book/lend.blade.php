@@ -33,7 +33,7 @@
             <td>{{ $lend->book->id }}</td>
             <td> <img src="{{ asset('storage/public/book/' . $lend->book->cover) }}" alt="Book cover" width="100"></td>
             <td>{{ $lend->book->title }}</td>
-            <td>{{ $lend->user->username }}</td>
+            <td>{{ $lend->user->username ?? 'None' }}</td>
             @if(\Carbon\Carbon::parse($lend->return_date)->isPast())
                 <td style="color: red;">{{ \Carbon\Carbon::parse($lend->return_date)->locale('id')->isoFormat('dddd, D MMMM Y') }}</td>
             @else
