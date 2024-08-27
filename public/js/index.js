@@ -1,8 +1,8 @@
-$(".btn").on("click", function (e) {
-    if ($(this).hasClass("disable")) {
-        e.preventDefault();
-    }
-});
+// $(".btn").on("click", function (e) {
+//     if ($(this).hasClass("disable")) {
+//         e.preventDefault();
+//     }
+// });
 
 $(document).on("click", ".detail", function () {
 
@@ -17,7 +17,7 @@ $(document).on("click", ".detail", function () {
 
     $("#book-cover").attr("src", `storage/public/book/${img}`);
 
-    $("a").attr("href", `/book-detail/${id}`)
+    $("#book-detail-link").attr("href", `/book-detail/${id}`)
     document.getElementById("id").innerHTML = id;
     document.getElementById("author").innerHTML = $(this).data('author');
     document.getElementById("title").innerHTML = $(this).data('title');
@@ -45,22 +45,22 @@ $(document).on("click", ".detail", function () {
     }
 });
 
-function deleteData(id, url){
-    const formDelete = document.querySelector('#form-delete');
+// function deleteData(id, url){
+//     const formDelete = document.querySelector('#form-delete');
 
-    Swal.fire({
-        title: "Are you sure?",
-        text: "You won't be able to revert this!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, delete it!"
-      }).then((result) => {
-        if (result.isConfirmed) {
-            formDelete.setAttribute('action', `/` + url + `/` + id);
-            formDelete.submit();
-            return;
-        }
-      });
-};
+//     Swal.fire({
+//         title: "Are you sure?",
+//         text: "You won't be able to revert this!",
+//         icon: "warning",
+//         showCancelButton: true,
+//         confirmButtonColor: "#3085d6",
+//         cancelButtonColor: "#d33",
+//         confirmButtonText: "Yes, delete it!"
+//       }).then((result) => {
+//         if (result.isConfirmed) {
+//             formDelete.setAttribute('action', `/` + url + `/` + id);
+//             formDelete.submit();
+//             return;
+//         }
+//       });
+// };

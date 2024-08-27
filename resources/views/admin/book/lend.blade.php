@@ -4,12 +4,24 @@
 @section('content')
 
 <!-- <div class="container mt-3"> -->
+<div class="row">
+    <div class="col p-0 ml-2">
+        <a href="/lends/export/excel" class="btn btn-outline-success">
+            <i class="fa fa-download"> Excel</i>
+        </a>
+    </div>
+    <div class="col p-0 mr-2">
+        <a class="btn btn-outline-secondary" href="/lends/history" style="float:right; width: 92px">
+            <i class="fa fa-history"> History</i>
+        </a>
+    </div>
+</div>
 <table id="lend-book-table" class="table table-hover" style="width: 100%; padding: 1rem;">
     <thead class="thead-dark">
+        <th>ID</th>    
         <th>Cover</th>
         <th>Title</th>
         <th>Peminjam</th>
-        <!-- <th>Pinjam</th> -->
         <th>Kembali</th>
         <th>Telepon</th>
         <th>Action</th>
@@ -18,6 +30,7 @@
 
         @foreach($lends as $lend)
         <tr>
+            <td>{{ $lend->book->id }}</td>
             <td> <img src="{{ asset('storage/public/book/' . $lend->book->cover) }}" alt="Book cover" width="100"></td>
             <td>{{ $lend->book->title }}</td>
             <td>{{ $lend->user->username }}</td>

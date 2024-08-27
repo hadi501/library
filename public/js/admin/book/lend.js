@@ -6,11 +6,12 @@ $(document).ready(function () {
 });
 
 let books = [],
-    users = [];
+    users = [],
+    lends = [];
 
 function getData() {
-    var url_link = ["get-book", "get-user"];
-    for (var i = 0; i < 2; i++) {
+    var url_link = ["get-book", "get-user", "get-lend"];
+    for (var i = 0; i < 3; i++) {
         $.ajax({
             url: url_link[i],
             indexValue: i,
@@ -21,9 +22,13 @@ function getData() {
                     for (var j = 0; j < data.length; j++) {
                         books[j] = data[j];
                     }
-                } else {
+                }else if (this.indexValue == 1) {
                     for (var k = 0; k < data.length; k++) {
                         users[k] = data[k];
+                    }
+                } else {
+                    for (var l = 0; l < data.length; l++) {
+                        lends[l] = data[l];
                     }
                 }
             },
@@ -36,7 +41,7 @@ document.querySelector(".container-fluid").innerHTML = `
     <i class="fa fa-bars"></i>
     <span class="sr-only">Toggle Menu</span>
 </button>
-<button type="button" class="btn btn-info"  data-toggle="modal" data-target="#exampleModalCenter">
+<button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModalCenter" style="width: 92px">
     <i class="fa fa-plus"> Pinjam</i>
 </button>
 `;
@@ -150,6 +155,21 @@ function statusCheck(){
 
 }
 
+function userLendCount(){
+    var user_id = lends.map(function (lend) {
+        return lend["user_id"];
+    });
+
+    let nim = parseInt($("input[name=nim]").val());
+    let count = user_id.filter(x => x === nim).length;
+
+    if(count > 2 || count + $(".idbook").length > 3) {
+        removeDetailLend();
+        Swal.fire("Error!", "User telah mencapai limit peminjaman! maksimal 3 buku", "error");
+        return false;
+    }
+}
+
 
 //jQuery time
 var current_fs, next_fs, previous_fs; //fieldsets
@@ -158,20 +178,9 @@ var animating; //flag to prevent quick multi-click glitches
 
 function next_animation() {
 
-    // userCheck();
-    if (userCheck() == false) {
+    if (userCheck() == false || bookCheck() == false || statusCheck() == false || userLendCount() == false) {
         return;
     }
-
-    if (bookCheck() == false) {
-        return;
-    }
-
-    if (statusCheck() == false) {
-        return;
-    }
-
-    // bookCheck();
 
     if (animating) return false;
     animating = true;
@@ -287,8 +296,8 @@ document
 // });
 
 function addNew() {
-    if ($("#book-div").get(0).childElementCount == 5) {
-        Swal.fire("Error!", "Maksimal 5 Buku", "error");
+    if ($("#book-div").get(0).childElementCount == 3) {
+        Swal.fire("Error!", "Maksimal 3 Buku", "error");
         return false;
     }
 

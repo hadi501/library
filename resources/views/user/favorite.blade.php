@@ -8,6 +8,9 @@
         <thead class="thead-dark">
             <th>Cover</th>
             <th>Title</th>
+            <th>Author</th>
+            <th>Category</th>
+            <th>Status</th>
             <th>detail</th>
         </thead>
         <tbody>
@@ -16,6 +19,13 @@
             <tr>
                 <td> <img src="{{ asset('storage/public/book/' . $favorite->book->cover) }}" alt="Book cover" width="100"></td>
                 <td>{{ $favorite->book->title }}</td>
+                <td>{{ $favorite->book->author }}</td>
+                <td>{{ $favorite->book->category }}</td>
+                @if ($favorite->book->status == '0')
+                <td style="color: #007bff;">Tersedia</td>
+                @else
+                <td style="color: #c82333;">Dipinjam</td>
+                @endif
                 <td>
                 <a href="/book-detail/{{ $favorite->book_id }}">
                   <button type="button" class="btn btn-info"><i class="bi bi-info-circle-fill"></i></button>

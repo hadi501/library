@@ -4,35 +4,26 @@
 @section('content')
 
 <!-- <div class="container mt-3"> -->
-<table id="book-table" class="table table-hover" style="width: 100%; padding: 1rem;">
+<div class="row">
+    <div class="col p-0 ml-2">
+        <a href="/books/export/excel" class="btn btn-outline-success">
+            <i class="fa fa-download"> Excel</i>
+        </a>
+    </div>
+</div>
+
+<table id="books-table" class="table table-hover" style="width: 100%; padding: 1rem;">
     <thead class="thead-dark">
         <th>ID</th>
         <th>Cover</th>
         <th>Title</th>
         <th>Author</th>
-        <th>category</th>
+        <th>Category</th>
         <th>Action</th>
     </thead>
 
     <tbody>
-        @foreach($books as $book)
-        <tr>
-            <td>{{ $book->id }}</td>
-            <td> <img src="{{ asset('storage/public/book/' . $book->cover) }}" alt="Book cover" width="100"></td>
-            <td>{{ $book->title }}</td>
-            <td>{{ $book->author }}</td>
-            <td>{{ $book->category }}</td>
-            <td>
-                <a href="{{ route('book.edit', $book->id) }}" class="btn btn-success">
-                    <i class="bi bi-pencil"></i>
-                </a>
-                <a href="#" class="btn btn-danger" onclick="deleteData(id = '{{$book->id}}', url = 'book')">
-                    <i class="bi bi-trash"></i>
-                </a>
-
-            </td>
-        </tr>
-        @endforeach
+        
     </tbody>
 </table>
 

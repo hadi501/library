@@ -6,9 +6,12 @@ use Illuminate\Http\Request;
 use App\Models\Book;
 use App\Models\User;
 use App\Models\Lend;
+use App\Exports\LendExport;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 use RealRashid\SweetAlert\Facades\Alert;
+use Yajra\DataTables\Facades\DataTables;
 use Carbon\Carbon;
 
 class LendController extends Controller
@@ -34,6 +37,42 @@ class LendController extends Controller
         $carbon = Carbon::class;
 
         return view('user.lend', ['lends' => $lends, 'carbon' => $carbon, 'searchBar' => 'off']);
+    }
+
+
+    /**
+     * Display history of the resource.
+     */
+    public function history(Request $request)
+    {
+        if($request->ajax()){
+            
+            $data = Lend::with(['user','book'])->where('status', '0')->orWhere('status', '2')->orderBy('id', 'desc')->get();
+
+            return DataTables::of($data)
+            ->addColumn('cover',function($data){
+                return '<img src="'.asset('storage/public/book/' . $data->book->cover).'" alt="Book cover" width="100">';
+            })
+            ->addColumn('title',function($data){
+                return $data->book->title;
+            })
+            ->addColumn('category',function($data){
+                return $data->book->category;
+            })
+            ->addColumn('peminjam',function($data){
+                return $data->user->username;
+            })
+            ->addColumn('pinjam',function($data){
+                return Carbon::parse($data->created_at)->locale('id')->isoFormat('dddd, D MMMM Y');
+            })
+            ->addColumn('selesai',function($data){
+                return Carbon::parse($data->updated_at)->locale('id')->isoFormat('dddd, D MMMM Y');
+            })
+            ->rawColumns(['cover'])
+            ->make(true);
+        }
+
+        return view('admin.book.lendhistory', ['searchBar' => 'off', compact('request')]);
     }
 
 
@@ -123,5 +162,9 @@ class LendController extends Controller
         }
 
         return redirect()->action([LendController::class, 'index']);
+    }
+
+    public function export_excel() {
+        return Excel::download(new LendExport, "lend.xlsx");
     }
 }

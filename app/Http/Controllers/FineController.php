@@ -3,10 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Book;
 use App\Models\Lend;
 use App\Models\Fine;
 use Carbon\Carbon;
+use App\Exports\FineExport;
+use Maatwebsite\Excel\Facades\Excel;
 use RealRashid\SweetAlert\Facades\Alert;
+use Yajra\DataTables\Facades\DataTables;
+
+
 
 class FineController extends Controller
 {
@@ -21,6 +27,41 @@ class FineController extends Controller
         if($fine == true){
             return view('admin.book.fine', ['fines' => $fines,'searchBar' => 'off']);
         }
+    }
+
+    /**
+     * Display history of the resource.
+     */
+    public function history(Request $request)
+    {
+        if($request->ajax()){
+            
+            $data = Fine::with(['user','book'])->where('status', '1')->orderBy('id', 'desc')->get();
+
+            return DataTables::of($data)
+            ->addColumn('cover',function($data){
+                return '<img src="'.asset('storage/public/book/' . $data->book->cover).'" alt="Book cover" width="100">';
+            })
+            ->addColumn('title',function($data){
+                return $data->book->title;
+            })
+            ->addColumn('category',function($data){
+                return $data->book->category;
+            })
+            ->addColumn('peminjam',function($data){
+                return $data->user->username;
+            })
+            ->addColumn('selesai',function($data){
+                return Carbon::parse($data->updated_at)->locale('id')->isoFormat('dddd, D MMMM Y');
+            })
+            ->addColumn('jumlah',function($data){
+                return $data->amount;
+            })
+            ->rawColumns(['cover'])
+            ->make(true);
+        }
+
+        return view('admin.book.finehistory', ['searchBar' => 'off', compact('request')]);
     }
 
     /**
@@ -136,12 +177,19 @@ class FineController extends Controller
     public function destroy(string $id)
     {
         $fine = Fine::find($id);
-        $fine->status = '1';
+        $book = Book::find($fine->book->id);
         
-        $fine->update();
-
-        Alert::success('Success!', 'Denda telah dibayar');
-
+        if($book->status == 1){
+            Alert::error('Error!', 'Status buku belum dikembalikan! Harap selesaikan peminjaman terlebih dahulu');
+        } else{
+            $fine->status = '1';
+            $fine->update();
+            Alert::success('Success!', 'Denda telah dibayar');
+        }
         return redirect()->action([FineController::class, 'index']);
+    }
+
+    public function export_excel() {
+        return Excel::download(new FineExport, "fine.xlsx");
     }
 }

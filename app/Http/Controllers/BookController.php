@@ -8,10 +8,14 @@ use App\Models\Lend;
 use App\Models\Fine;
 use App\Models\Rate;
 use App\Models\Favorite;
+use App\Exports\BookExport;
+use App\DataTables\BooksDataTable;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use RealRashid\SweetAlert\Facades\Alert;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Storage;
+use Yajra\DataTables\Facades\DataTables;
+use RealRashid\SweetAlert\Facades\Alert;
 
 use function Laravel\Prompts\search;
 
@@ -54,10 +58,41 @@ class BookController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+
+    public function index(Request $request, BooksDataTable $dataTable)
     {
-        $books = Book::all();
-        return view('admin.book.index', ['books' => $books, 'searchBar' => 'off']);
+
+        if($request->ajax()){
+            
+            $data = new Book;
+            $data = $data->get();
+
+            return DataTables::of($data)
+            ->addColumn('id',function($data){
+                return $data->id;
+            })
+            ->addColumn('cover',function($data){
+                return '<img src="'.asset('storage/public/book/' . $data->cover).'" alt="Book cover" width="100">';
+            })
+            ->addColumn('title',function($data){
+                return $data->title;
+            })
+            ->addColumn('author',function($data){
+                return $data->author;
+            })
+            ->addColumn('category',function($data){
+                return $data->category;
+            })
+            ->addColumn('action',function($data){
+                return '<a href="'. route('book.edit', $data->id) .'"class="btn btn-success"><i class="bi bi-pencil"></i></a>
+                <a href="#" class="btn btn-danger" onclick="deleteData(id = '.$data->id.')", url = "book")"><i class="bi bi-trash"></i></a>
+                ';
+            })
+            ->rawColumns(['cover','action'])
+            ->make(true);
+        }
+
+        return view('admin.book.index', ['searchBar' => 'off', compact('request')]);
     }
 
     /**
@@ -207,4 +242,10 @@ class BookController extends Controller
         Alert::success('Success!', 'Buku berhasil dihapus');
         return redirect()->to('/book',)->with(['books' => $books, 'searchBar' => 'off']);
     }
+
+
+    public function export_excel() {
+        return Excel::download(new BookExport, "book.xlsx");
+    }
+
 }

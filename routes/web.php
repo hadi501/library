@@ -60,10 +60,21 @@ Route::middleware(['auth'])->group(function() {
  
     // Admin, Bendahara, Super Admin
     Route::middleware(['checkRole:1|2|3'])->group(function() {
+        
         Route::resource('book', BookController::class);
         Route::resource('lend', LendController::class);
         Route::resource('fine', FineController::class);
+
         Route::get('/admin', [DashboardController::class, 'adminIndex']);
+        
+        // History
+        Route::get('/lends/history', [LendController::class, 'history']);
+        Route::get('/fines/history', [FineController::class, 'history']);
+
+        // Excel Export
+        Route::get('/books/export/excel', [BookController::class, 'export_excel']);
+        Route::get('/lends/export/excel', [LendController::class, 'export_excel']);
+        Route::get('/fines/export/excel', [FineController::class, 'export_excel']);
     });
 
     // Bendahara, Super Admin
@@ -81,7 +92,7 @@ Route::middleware(['auth'])->group(function() {
 // JSON data
 Route::get('/get-book', [Controller::class, 'getBook']);
 Route::get('/get-user', [Controller::class, 'getUser']);
-
+Route::get('/get-lend', [Controller::class, 'getLend']);
 
 //Clear Cache facade value:
 Route::get('/clear-cache', function() {
@@ -94,31 +105,6 @@ Route::get('/optimize', function() {
     $exitCode = Artisan::call('optimize');
     return '<h1>Reoptimized class loader</h1>';
 });
-
-//Route cache:
-Route::get('/route-cache', function() {
-    $exitCode = Artisan::call('route:cache');
-    return '<h1>Routes cached</h1>';
-});
-
-//Clear Route cache:
-Route::get('/route-clear', function() {
-    $exitCode = Artisan::call('route:clear');
-    return '<h1>Route cache cleared</h1>';
-});
-
-//Clear View cache:
-Route::get('/view-clear', function() {
-    $exitCode = Artisan::call('view:clear');
-    return '<h1>View cache cleared</h1>';
-});
-
-//Clear Config cache:
-Route::get('/config-cache', function() {
-    $exitCode = Artisan::call('config:cache');
-    return '<h1>Clear Config cleared</h1>';
-});
-
 
 Route::get('/key', function(){
     try {

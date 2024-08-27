@@ -8,6 +8,8 @@
   <thead class="thead-dark">
     <th>Cover</th>
     <th>Title</th>
+    <th>Author</th>
+    <th>Category</th>
     <th>Status</th>
     <th>Kembali</th>
   </thead>
@@ -17,14 +19,16 @@
     <tr>
       <td> <img src="{{ asset('storage/public/book/' . $lend->book->cover) }}" alt="Book cover" width="100"> </td>
       <td>{{ $lend->book->title }}</td>
+      <td>{{ $lend->book->author }}</td>
+      <td>{{ $lend->book->category }}</td>
       @if ($lend->status == '1')
       @if(\Carbon\Carbon::parse($lend->return_date)->isPast())
-      <td><button type="button" class="btn btn-danger" style="min-width: 70px;">Late</button></td>
+      <td><button type="button" class="btn btn-danger" style="min-width: 70px;">Telat</button></td>
       @else
-      <td><button type="button" class="btn btn-success" style="min-width: 70px;">Lend</button></td>
+      <td><button type="button" class="btn btn-success" style="min-width: 70px;">Dipinjam</button></td>
       @endif
       @else
-      <td><button type="button" class="btn btn-info" style="min-width: 70px;">Done</button></td>
+      <td><button type="button" class="btn btn-info" style="min-width: 70px;">Selesai</button></td>
       @endif
       @if ($lend->status == '1')
       <td>{{ \Carbon\Carbon::parse($lend->return_date)->locale('id')->isoFormat('dddd, D MMMM Y') }}</td>

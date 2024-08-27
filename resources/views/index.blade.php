@@ -32,7 +32,7 @@
               <li><!----><span> Penerbit <p id="publisher"> Penerbit Buku </p></span><!----><span> Kategori <p id="category" >Kategori Buku</p></span></li>
               <li><!----><span> Tahun <p id="year">Tahun Terbit</p></span><!----><span> Tipe Buku <p id="type"> Type </p></span></li>
               <li><!----><span> ID Buku <p id="id"> 15125 </p></span><!----><span> Status <p id="status" style="font-weight:600; color: #007bff;"> Tersedia </p></span></li>
-              <li style="display: block;"><!----><p> <a href="#" class="btn btn-outline-warning btn-block">Detail <i class="bi bi-arrow-right-square-fill"></i></a></p></li>
+              <li style="display: block;"><!----><p> <a href="#" id="book-detail-link" class="btn btn-outline-warning btn-block">Detail <i class="bi bi-arrow-right-square-fill"></i></a></p></li>
             </ul><!---->
           </div>
         </div>
