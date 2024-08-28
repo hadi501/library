@@ -2,6 +2,7 @@ $(document).ready(function(){
    
     $('#books-table').dataTable({
         processing: true,
+        responsive: true,
         ajax: {url:"/book"},
         columns: [
             {data : 'id', name : 'id'},

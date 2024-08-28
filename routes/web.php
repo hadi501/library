@@ -85,6 +85,9 @@ Route::middleware(['auth'])->group(function() {
     // Super Admin
     Route::middleware(['checkRole:3'])->group(function() {
         Route::resource('user', UserController::class);
+
+        //Export Excel
+        Route::get('/users/export/excel', [UserController::class, 'export_excel']);
     });
 
 });

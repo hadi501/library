@@ -11,7 +11,7 @@
     </div>
     <div class="row">
 
-        <form action="{{ route('user.store') }}" method="POST" enctype="multipart/form-data">
+        <form id="form-add-user" action="{{ route('user.store') }}" method="POST" enctype="multipart/form-data">
             {{ csrf_field() }}
             <div class="col-12 col-md-6">
                 <div style="padding: 1rem 0;">

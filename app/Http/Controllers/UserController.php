@@ -9,35 +9,68 @@ use App\Models\Fine;
 use App\Models\Rate;
 use App\Models\Favorite;
 use App\Models\Passtoken;
+use App\Exports\UserExport;
+use Yajra\DataTables\Facades\DataTables;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
 use RealRashid\SweetAlert\Facades\Alert;
-use Illuminate\Contracts\Encryption\DecryptException;
+
 
 class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::all();
 
-        return view('admin.user.index', ['users' => $users, 'searchBar' => 'off']);
+        if($request->ajax()){
+            
+            $data = new User;
+            $data = $data->get();
+
+            return DataTables::of($data)
+            ->addColumn('id',function($data){
+                return $data->id;
+            })
+            ->addColumn('username',function($data){
+                return $data->username;
+            })
+            ->addColumn('email',function($data){
+                return $data->email;
+            })
+            ->addColumn('phone',function($data){
+                return $data->phone;
+            })
+            ->addColumn('role',function($data){
+                if( $data->role == 0 ){
+                    return 'user';
+                } elseif( $data->role == 1 ){
+                    return 'Admin';
+                } elseif( $data->role == 2 ){
+                    return 'Bendahara';
+                } else{
+                    return 'Super Admin';
+                }
+            })
+            ->addColumn('action',function($data){
+                return '<a href="'. route('user.edit', $data->id) .'"class="btn btn-success"><i class="bi bi-pencil"></i></a>
+                <a href="#" class="btn btn-danger" onclick="deleteData(id = '.$data->id.')", url = "book")"><i class="bi bi-trash"></i></a>
+                ';
+            })
+            ->rawColumns(['action'])
+            ->make(true);
+        }
+
+        return view('admin.user.index', ['searchBar' => 'off', compact('request')]);
     }
 
     public function userIndex(){
 
         $user = User::find(Auth::user()->id);
-        // try {
-        //     $password = Crypt::decryptString($user->password);
-        // } catch (DecryptException $e) {
-        //     $password = $e;
-        // }
 
         $password = $user->password;
-        
 
         return view('user.profile', ['user' => $user, 'password' => $password, 'searchBar' => 'off']);
     
@@ -194,4 +227,9 @@ class UserController extends Controller
         Alert::success('Success!', 'User berhasil dihapus');
         return redirect()->to('/user',)->with(['users' => $users,'searchBar' => 'off']);
     }
+
+    public function export_excel() {
+        return Excel::download(new UserExport, "user.xlsx");
+    }
+
 }

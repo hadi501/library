@@ -1,6 +1,7 @@
 $(document).ready(function(){
     $('#lend-history-table').dataTable({
         processing: true,
+        responsive: true,
         ajax: {url:"/lends/history"},
         columns: [
             {data : 'cover',    name : 'cover'},

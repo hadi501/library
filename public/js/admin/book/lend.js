@@ -1,3 +1,9 @@
+$(document).keypress( function(event){
+    if (event.which == '13') {
+        event.preventDefault();
+    }
+});
+
 $(document).ready(function () {
     $("#lend-book-table").DataTable({
         responsive: true,
@@ -118,8 +124,7 @@ function bookCheck() {
             document.getElementById("tr-" + i).appendChild(td_title);
 
             document.getElementById("id-" + i).innerHTML = books[index].id;
-            document.getElementById("title-" + i).innerHTML =
-                books[index].title;
+            document.getElementById("title-" + i).innerHTML = books[index].title;
         }
     }
 }

@@ -4,44 +4,26 @@
 @section('content')
 
 <!-- <div class="container mt-3"> -->
+
+<div class="row">
+    <div class="col p-0 ml-2">
+        <a href="/users/export/excel" class="btn btn-outline-success">
+            <i class="fa fa-download"> Excel</i>
+        </a>
+    </div>
+</div>
+
 <table id="user-table" class="table table-hover" style="width: 100%; padding: 1rem;">
     <thead class="thead-dark">
         <th>NIM</th>
-        <th>Nama</th>
+        <th>Username</th>
         <th>Email</th>
-        <th>Telepon</th>
+        <th>Phone</th>
         <th>Role</th>
-        <th>action</th>
+        <th>Action</th>
     </thead>
     <tbody>
-
-        @foreach($users as $user)
-        <tr>
-            <td>{{ $user->id }}</td>
-            <td>{{ $user->username }}</td>
-            <td>{{ $user->email }}</td>
-            <td><a target="_blank" rel="noopener noreferrer" class="phone" href="https://wa.me/62{{ $user->phone }}">0{{ $user->phone }}</a></td>
-            <td>
-                @if ($user->role == '0')
-                User
-                @elseif ($user->role == '1')
-                Admin
-                @elseif ($user->role == '2')
-                Bendahara
-                @elseif ($user->role == '3')
-                Super Admin
-                @endif
-            </td>
-            <td>
-                <a href="{{ route('user.edit', $user->id) }}" class="btn btn-success">
-                    <i class="bi bi-pencil"></i>
-                </a>
-                <a href="#" class="btn btn-danger" onclick="deleteData(id = '{{$user->id}}', url = 'user')">
-                    <i class="bi bi-trash"></i>
-                </a>
-            </td>
-        </tr>
-        @endforeach
+        
     </tbody>
 </table>
 

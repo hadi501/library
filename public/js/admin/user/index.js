@@ -1,5 +1,20 @@
-$("#user-table").DataTable({
-    responsive: true,
+// $("#user-table").DataTable({
+//     responsive: true,
+// });
+$(document).ready(function(){
+    $('#user-table').dataTable({
+        processing: true,
+        responsive: true,
+        ajax: {url:"/user"},
+        columns: [
+            {data : 'id',       name : 'id'},
+            {data : 'username', name : 'username'},
+            {data : 'email',    name : 'email'},
+            {data : 'phone',    name : 'phone'},
+            {data : 'role',     name : 'role'},
+            {data : 'action',   name : 'action'}
+        ]
+    });
 });
 
 document.querySelector(".container-fluid").innerHTML = `

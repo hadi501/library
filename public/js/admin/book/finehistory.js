@@ -1,6 +1,7 @@
 $(document).ready(function(){
     $('#fine-history-table').dataTable({
         processing: true,
+        responsive: true,
         ajax: {url:"/fines/history"},
         columns: [
             {data : 'cover', name : 'cover'},

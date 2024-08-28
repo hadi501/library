@@ -4,11 +4,23 @@ function displaySelectedImage(event, elementId) {
 
     if (fileInput.files && fileInput.files[0]) {
         const reader = new FileReader();
-
-        reader.onload = function(e) {
-            selectedImage.src = e.target.result;
-        };
-
-        reader.readAsDataURL(fileInput.files[0]);
+        const size =  (fileInput.files[0].size / 1024 / 1024).toFixed(2);
+         
+        if (size > 1) {
+            Swal.fire("Ups!", "Ukuran gambar tidak boleh lebih dari 1 Mb", "info");
+        } else {
+            reader.onload = function(e) {
+                selectedImage.src = e.target.result;
+            };
+    
+            reader.readAsDataURL(fileInput.files[0]);
+        }
     }
 }
+
+const form = document.getElementById("form-add-book");
+form.addEventListener('invalid', function(e) {
+    if (e.target.name == 'cover'){
+        Swal.fire("Error!", "Gambar tidak boleh kosong!", "error");
+    }
+}, true);
