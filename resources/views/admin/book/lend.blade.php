@@ -5,11 +5,13 @@
 
 <!-- <div class="container mt-3"> -->
 <div class="row">
+    @if (Auth::user()->role == '3')
     <div class="col p-0 ml-2">
         <a href="/lends/export/excel" class="btn btn-outline-success">
             <i class="fa fa-download"> Excel</i>
         </a>
     </div>
+    @endif
     <div class="col p-0 mr-2">
         <a class="btn btn-outline-secondary" href="/lends/history" style="float:right; width: 92px">
             <i class="fa fa-history"> History</i>

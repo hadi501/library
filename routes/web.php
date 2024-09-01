@@ -70,11 +70,6 @@ Route::middleware(['auth'])->group(function() {
         // History
         Route::get('/lends/history', [LendController::class, 'history']);
         Route::get('/fines/history', [FineController::class, 'history']);
-
-        // Excel Export
-        Route::get('/books/export/excel', [BookController::class, 'export_excel']);
-        Route::get('/lends/export/excel', [LendController::class, 'export_excel']);
-        Route::get('/fines/export/excel', [FineController::class, 'export_excel']);
     });
 
     // Bendahara, Super Admin
@@ -87,6 +82,9 @@ Route::middleware(['auth'])->group(function() {
         Route::resource('user', UserController::class);
 
         //Export Excel
+        Route::get('/books/export/excel', [BookController::class, 'export_excel']);
+        Route::get('/lends/export/excel', [LendController::class, 'export_excel']);
+        Route::get('/fines/export/excel', [FineController::class, 'export_excel']);
         Route::get('/users/export/excel', [UserController::class, 'export_excel']);
     });
 

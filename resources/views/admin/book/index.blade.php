@@ -4,6 +4,8 @@
 @section('content')
 
 <!-- <div class="container mt-3"> -->
+
+@if (Auth::user()->role == '3')
 <div class="row">
     <div class="col p-0 ml-2">
         <a href="/books/export/excel" class="btn btn-outline-success">
@@ -11,6 +13,7 @@
         </a>
     </div>
 </div>
+@endif
 
 <table id="books-table" class="table table-hover" style="width: 100%; padding: 1rem;">
     <thead class="thead-dark">
