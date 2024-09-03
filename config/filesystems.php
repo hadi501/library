@@ -38,7 +38,7 @@ return [
 
         'hosting' => [
             'driver' => 'local',
-            'root' => storage_path() . '../../baithikmah/storage',
+            'root' => storage_path() . '/../../baithikmah/storage',
             'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
             'throw' => false,
