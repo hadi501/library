@@ -11,7 +11,7 @@
     </div>
     <div class="row">
 
-        <form action="{{ route('update.user', $user->id) }}" method="POST" enctype="multipart/form-data">
+        <form id="form-add-user"  action="{{ route('update.user', $user->id) }}" method="POST" enctype="multipart/form-data">
             
             {{ csrf_field() }}
             
