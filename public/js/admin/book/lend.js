@@ -166,7 +166,7 @@ function userLendCount(){
     });
 
     let nim = parseInt($("input[name=nim]").val());
-    let count = user_id.filter(x => x === nim).length;
+    let count = user_id.filter(x => x == nim).length;
 
     if(count > 2 || count + $(".idbook").length > 3) {
         removeDetailLend();
