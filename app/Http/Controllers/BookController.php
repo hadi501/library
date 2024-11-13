@@ -140,8 +140,8 @@ class BookController extends Controller
         $book->status       = $request->status;
 
         // Store image
-        $filename = $request->id . '.' . $request->cover->extension();
-        $path = $request->cover->storeAs('public/book', $filename);
+        $filename = $request->id . '_'. uniqid() . '.' . $request->cover->extension();
+        $request->cover->storeAs('public/book', $filename);
         $book->cover = $filename;
 
         // Save to Database
@@ -205,12 +205,12 @@ class BookController extends Controller
         $book->status       = $request->status;
 
         if ($request->hasFile('cover')) {
-            $filename = $request->id . '.' . $request->cover->extension();
+            $filename = $request->id . '_'. uniqid() . '.' . $request->cover->extension();
             // delete old cover
             if ($book->cover !== 'cover_default.jpg') {
                 Storage::delete('public/book/' . $book->cover);
             }
-            $path = Storage::putFileAs('public/book/', $request->file('cover'), $filename);
+            Storage::putFileAs('public/book/', $request->file('cover'), $filename);
             $book->cover = $filename;
         }
 

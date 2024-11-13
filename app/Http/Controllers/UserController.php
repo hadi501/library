@@ -112,8 +112,8 @@ class UserController extends Controller
         $user->role     = $request->role;
 
         // Store image
-        $filename = $request->id . '.' . $request->picture->extension();
-        $path = $request->picture->storeAs('public/user', $filename);
+        $filename = $request->id . '_'. uniqid() . '.' . $request->picture->extension();
+        $request->picture->storeAs('public/user', $filename);
         $user->picture = $filename;
         
         // Save to Database
@@ -162,12 +162,12 @@ class UserController extends Controller
         $user->role     = $request->role;
 
         if ($request->hasFile('picture')) {
-            $filename = $request->id . '.' . $request->picture->extension();
+            $filename = $request->id . '_'. uniqid() . '.' . $request->picture->extension();
             // delete old cover
             if ($user->picture !== 'picture_default.png') {
                 Storage::delete('public/user/' . $user->picture);
             }
-            $path = Storage::putFileAs('public/user/', $request->file('picture'), $filename);
+            Storage::putFileAs('public/user/', $request->file('picture'), $filename);
             $user->picture = $filename;
         }
 
