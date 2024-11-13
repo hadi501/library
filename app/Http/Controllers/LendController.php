@@ -92,15 +92,10 @@ class LendController extends Controller
         
         for($i = 0; $i < count($request->bookid); $i++){
             
-            $lend = new Lend();
-            
-            $lend->user_id = $request->nim;
-            $lend->book_id = $request->bookid[$i];
-            $lend->lend_date = $request->lend_date;
-            $lend->return_date = $request->return_date;
-            $lend->status = '1';
-
-            $lend->save();
+            Lend::updateOrCreate(
+                ['user_id' => $request->nim, 'book_id' => $request->bookid[$i], 'lend_date' => $request->lend_date],
+                ['return_date' => $request->return_date, 'status' => '1']
+            );
 
             Book::where('id', $request->bookid[$i])->update(['status' => '1']);
 
